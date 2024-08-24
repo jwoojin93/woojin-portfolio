@@ -1,34 +1,64 @@
-import { formatToTimeAgo, formatToWon } from "@/lib/utils";
-import Image from "next/image";
-import Link from "next/link";
+"use client";
 
-interface ListProductProps {
-  title: string;
-  price: number;
-  created_at: Date;
-  photo: string;
-  id: number;
+import { InitialProducts } from "@/app/(tabs)/home/page";
+import ListProduct from "./list-product";
+import { useEffect, useRef, useState } from "react";
+import { getMoreProducts } from "@/app/(tabs)/home/actions";
+
+interface ProductListProps {
+  initialProducts: InitialProducts;
 }
 
-export default function ListProduct({
-  title,
-  price,
-  created_at,
-  photo,
-  id,
-}: ListProductProps) {
+export default function ProductList({ initialProducts }: ProductListProps) {
+  const [products, setProducts] = useState(initialProducts);
+  const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(0);
+  const [isLastPage, setIsLastPage] = useState(false);
+  const trigger = useRef<HTMLSpanElement>(null);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      async (
+        entries: IntersectionObserverEntry[],
+        observer: IntersectionObserver
+      ) => {
+        const element = entries[0];
+        if (element.isIntersecting && trigger.current) {
+          observer.unobserve(trigger.current);
+          setIsLoading(true);
+          const newProducts = await getMoreProducts(page + 1);
+          if (newProducts.length !== 0) {
+            setProducts((prev) => [...prev, ...newProducts]);
+            setPage((prev) => prev + 1);
+          } else {
+            setIsLastPage(true);
+          }
+          setIsLoading(false);
+        }
+      },
+      {
+        threshold: 1.0,
+      }
+    );
+    if (trigger.current) {
+      observer.observe(trigger.current);
+    }
+    return () => {
+      observer.disconnect();
+    };
+  }, [page]);
   return (
-    <Link href={`/products/${id}`} className="flex gap-5">
-      <div className="relative size-28 rounded-md overflow-hidden">
-        <Image fill src={`${photo}`} className="object-cover" alt={title} />
-      </div>
-      <div className="flex flex-col gap-1 *:text-white">
-        <span className="text-lg">{title}</span>
-        <span className="text-sm text-neutral-500">
-          {formatToTimeAgo(created_at.toString())}
+    <div className="p-5 flex flex-col gap-5">
+      {products.map((product) => (
+        <ListProduct key={product.id} {...product} />
+      ))}
+      {/* {!isLastPage ? (
+        <span
+          ref={trigger}
+          className="text-sm font-semibold bg-orange-500 w-fit mx-auto px-3 py-2 rounded-md hover:opacity-90 active:scale-95"
+        >
+          {isLoading ? "로딩 중" : "Load more"}
         </span>
-        <span className="text-lg font-semibold">{formatToWon(price)}원</span>
-      </div>
-    </Link>
+      ) : null} */}
+    </div>
   );
 }
