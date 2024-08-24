@@ -1,4 +1,4 @@
-import Image from "next/image";
+import "@/lib/db";
 
 export default function Home() {
   return (
