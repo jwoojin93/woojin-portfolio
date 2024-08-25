@@ -8,9 +8,12 @@ import { RealtimeChannel, createClient } from "@supabase/supabase-js";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
+// const SUPABASE_PUBLIC_KEY =
+//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJmaHZzbHpsbnp6eXRmd21jd3dzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE1MzIwMDYsImV4cCI6MjAyNzEwODAwNn0.6_CBGkLSb8hl06prsZkzsUrf98pjwcwgXgqeFLNiXL0";
+// const SUPABASE_URL = "https://bfhvslzlnzzytfwmcwws.supabase.co";
 const SUPABASE_PUBLIC_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJmaHZzbHpsbnp6eXRmd21jd3dzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTE1MzIwMDYsImV4cCI6MjAyNzEwODAwNn0.6_CBGkLSb8hl06prsZkzsUrf98pjwcwgXgqeFLNiXL0";
-const SUPABASE_URL = "https://bfhvslzlnzzytfwmcwws.supabase.co";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxtbXlzaXRsc2dzZWVsZWFmaXd5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjQ1NzM0MjMsImV4cCI6MjA0MDE0OTQyM30.ouM3hT54Pi4K7uR2oErs4P5_uQy63dsDwSsbV6MNgMA";
+const SUPABASE_URL = "https://lmmysitlsgseeleafiwy.supabase.co";
 
 interface ChatMessageListProps {
   initialMessages: InitialChatMessages;
