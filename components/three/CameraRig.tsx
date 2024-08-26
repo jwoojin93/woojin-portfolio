@@ -15,7 +15,7 @@ const CameraRig = ({ children }: PropsWithChildren) => {
       !isCustomizer && typeof window && window.innerWidth <= 1440;
     const isMobile = !isCustomizer && typeof window && window.innerWidth <= 600;
 
-    // ternary operator is not an option for clean code
+    // 삼항 연산자는 깨끗한 코드의 옵션이 아닙니다
     let targetPosition: [x: number, y: number, z: number] = [-0.4, 0, 2];
 
     if (isCustomizer) {
