@@ -24,10 +24,18 @@ const metallica = localFont({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Karrot Market",
-    default: "Karrot Market",
+    template: "%s | Woojin's Portfolio",
+    default: "Woojin's Portfolio",
   },
   description: "Sell and buy all the things!",
+  metadataBase: new URL("https://r3f-nextjs.vercel.app/"), // TODO(Woojin): metadataBase 의 기능 알아보기.
+  openGraph: {
+    type: "website",
+    locale: "ko_KR",
+    url: "https://r3f-nextjs.vercel.app/",
+    title: "R3F & NextJS@13 😊",
+    description: "Customize Model with your own style!",
+  },
 };
 
 export default function RootLayout({

@@ -12,6 +12,8 @@
     "@heroicons/react": "^2.1.5",
     "@hookform/resolvers": "^3.9.0",
     "@prisma/client": "^5.18.0",
+    "@react-three/drei": "^9.111.3",
+    "@react-three/fiber": "^8.17.6",
     "@supabase/supabase-js": "^2.45.2",
     "@tailwindcss/forms": "^0.5.7",
     "@vercel/postgres": "^0.9.0",
@@ -24,6 +26,7 @@
     "react-hook-form": "^7.53.0",
     "twilio": "^5.2.2",
     "validator": "^13.12.0",
+    "valtio": "^1.13.2",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -31,7 +34,9 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/three": "^0.167.2",
     "@types/validator": "^13.12.0",
+    "autoprefixer": "^10.4.20",
     "eslint": "^8",
     "eslint-config-next": "14.2.6",
     "postcss": "^8",
