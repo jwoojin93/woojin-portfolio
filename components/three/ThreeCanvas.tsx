@@ -5,9 +5,7 @@ import { Center, Loader } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
 import { useSnapshot } from "valtio";
-import BackdropLight from "./BackdropLight";
 import CameraRig from "./CameraRig";
-import { ShirtModel } from "./models/ShirtModel";
 import { YachtModel } from "./models/YachtModel";
 
 const ThreeCanvas = () => {
@@ -30,22 +28,8 @@ const ThreeCanvas = () => {
         <Suspense fallback={null}>
           <ambientLight intensity={0.5} />
           <pointLight position={[10, 10, 10]} intensity={0.75} />
-
           <CameraRig>
-            <Center>
-              {activeModel === "shirt" ? (
-                <>
-                  <BackdropLight />
-                  <ShirtModel />
-                </>
-              ) : null}
-              {activeModel === "yacht" ? (
-                <>
-                  <BackdropLight />
-                  <YachtModel />
-                </>
-              ) : null}
-            </Center>
+            <Center>{activeModel === "yacht" ? <YachtModel /> : null}</Center>
           </CameraRig>
         </Suspense>
       </Canvas>

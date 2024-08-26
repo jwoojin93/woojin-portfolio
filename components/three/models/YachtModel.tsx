@@ -7,14 +7,15 @@ Source: https://sketchfab.com/3d-models/yacht-0dd451f295d049cea20c17d3ffa87ee3
 Title: Yacht
 */
 
-import { canvasState } from "@/store/canvasState";
 import { globalState } from "@/store/globalState";
-import { Decal, useGLTF, useTexture } from "@react-three/drei";
+import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { dampC } from "maath/easing";
+import { useState } from "react";
 import * as THREE from "three";
 import { GLTF } from "three-stdlib";
 import { useSnapshot } from "valtio";
+import { useSpring, animated, config } from "@react-spring/three";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -29,53 +30,38 @@ const yachtSrc = "/model/yacht_light.glb";
 
 export function YachtModel(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF(yachtSrc) as GLTFResult;
-
   const { themeColor } = useSnapshot(globalState);
-  const { logoTexture, fullTexture } = useSnapshot(canvasState);
-
-  const logoTextureMap = useTexture(logoTexture.decal);
-  const fullTextureMap = useTexture(fullTexture.decal);
 
   useFrame((_state, delta) =>
     dampC(materials["01_-_Default"].color, themeColor, 0.25, delta)
   );
 
+  const [isClicked, setClicked] = useState(false);
+
+  const { rotation } = useSpring({
+    rotation: !isClicked ? [1, -2, 1] : [0, -7.5, 0.2],
+    config: config.wobbly,
+  });
+
+  const springs = useSpring({
+    scale: isClicked ? 0.0003 : 0.00025,
+    config: config.wobbly,
+  });
+
   return (
     <group {...props} dispose={null}>
-      <mesh
+      <animated.mesh
         castShadow
         geometry={nodes["korpus1_01_-_Default_0"].geometry}
         material={materials["01_-_Default"]}
-        position={[0.05, -0.1, 0]}
-        rotation={[0, Math.PI + 0.45, 0]}
-        scale={0.00025}
+        position={[0, -0.1, 0]}
+        // @ts-ignore
+        rotation={rotation}
+        scale={springs.scale}
+        onClick={() => setClicked(!isClicked)}
         material-roughness={1}
         dispose={null}
-      >
-        {logoTexture.active ? (
-          <Decal
-            map={logoTextureMap}
-            scale={[
-              -(0.1 * 1) / 0.00025,
-              (0.1 * 1) / 0.00025,
-              (0.1 * 1) / 0.00025,
-            ]}
-            position={[900, 40, -300]}
-            rotation={[0, 0, 0]}
-            // map-anisotrophy={16}
-            depthTest={true}
-            // depthWrite={false}
-          />
-        ) : null}
-
-        {fullTexture.active ? (
-          <Decal
-            map={fullTextureMap}
-            scale={(1 / 0.00025) * 0.75}
-            position={[0, 0, 0]}
-          />
-        ) : null}
-      </mesh>
+      ></animated.mesh>
     </group>
   );
 }
