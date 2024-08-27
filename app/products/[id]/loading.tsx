@@ -1,5 +1,6 @@
 import { PhotoIcon } from "@heroicons/react/24/solid";
 
+// product 제품 상세페이지를 불러오는 동안 보여줄 로딩 페이지 입니다.
 export default function Loading() {
   return (
     <div className="animate-pulse p-5 flex flex-col gap-5">

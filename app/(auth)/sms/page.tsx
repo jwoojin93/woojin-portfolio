@@ -12,6 +12,7 @@ const initialState = {
 
 export default function SMSLogin() {
   const [state, dispatch] = useFormState(smsLogIn, initialState);
+
   return (
     <div className="flex flex-col gap-10 py-8 px-6">
       <div className="flex flex-col gap-2 *:font-medium">

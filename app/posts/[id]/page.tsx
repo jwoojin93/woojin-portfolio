@@ -11,13 +11,9 @@ import LikeButton from "@/components/like-button";
 async function getPost(id: number) {
   try {
     const post = await db.post.update({
-      where: {
-        id,
-      },
+      where: { id },
       data: {
-        views: {
-          increment: 1,
-        },
+        views: { increment: 1 },
       },
       include: {
         user: {
@@ -27,9 +23,7 @@ async function getPost(id: number) {
           },
         },
         _count: {
-          select: {
-            comments: true,
-          },
+          select: { comments: true },
         },
       },
     });
@@ -46,6 +40,7 @@ const getCachedPost = nextCache(getPost, ["post-detail"], {
 
 async function getLikeStatus(postId: number) {
   const session = await getSession();
+
   const isLiked = await db.like.findUnique({
     where: {
       id: {
@@ -54,11 +49,11 @@ async function getLikeStatus(postId: number) {
       },
     },
   });
+
   const likeCount = await db.like.count({
-    where: {
-      postId,
-    },
+    where: { postId },
   });
+
   return {
     likeCount,
     isLiked: Boolean(isLiked),
@@ -69,6 +64,7 @@ function getCachedLikeStatus(postId: number) {
   const cachedOperation = nextCache(getLikeStatus, ["product-like-status"], {
     tags: [`like-status-${postId}`],
   });
+
   return cachedOperation(postId);
 }
 
@@ -78,13 +74,11 @@ export default async function PostDetail({
   params: { id: string };
 }) {
   const id = Number(params.id);
-  if (isNaN(id)) {
-    return notFound();
-  }
+  if (isNaN(id)) return notFound();
+
   const post = await getCachedPost(id);
-  if (!post) {
-    return notFound();
-  }
+  if (!post) return notFound();
+
   const { likeCount, isLiked } = await getCachedLikeStatus(id);
   return (
     <div className="p-5 text-white">

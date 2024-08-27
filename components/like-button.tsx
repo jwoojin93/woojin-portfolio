@@ -25,6 +25,7 @@ export default function LikeButton({
         : previousState.likeCount + 1,
     })
   );
+
   const onClick = async () => {
     reducerFn(undefined);
     if (isLiked) {
@@ -33,6 +34,7 @@ export default function LikeButton({
       await likePost(postId);
     }
   };
+
   return (
     <button
       onClick={onClick}

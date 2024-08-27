@@ -25,9 +25,7 @@ async function getPosts() {
   return posts;
 }
 
-export const metadata = {
-  title: "동네생활",
-};
+export const metadata = { title: "동네생활" };
 
 export default async function Life() {
   const posts = await getPosts();

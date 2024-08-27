@@ -35,11 +35,12 @@ export const metadata = {
 
 export default async function Products() {
   const initialProducts = await getInitialProducts();
+
   const revalidate = async () => {
     "use server";
     revalidatePath("/home");
   };
-  console.log("initialProducts: ", initialProducts);
+
   return (
     <div>
       {initialProducts.length > 0 ? (

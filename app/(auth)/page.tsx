@@ -13,6 +13,7 @@ export default function Home() {
         </Suspense>
 
         <h2 className="text-2xl">{"Woojin's Portfolio 에 어서오세요!"}</h2>
+        <span>{"emoji 를 클릭해보세요!"}</span>
       </div>
       <div className="flex flex-col items-center gap-3 w-full">
         <Link href="/create-account" className="primary-btn text-lg py-2.5">

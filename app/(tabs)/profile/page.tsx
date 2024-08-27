@@ -7,13 +7,9 @@ async function getUser() {
   const session = await getSession();
   if (session.id) {
     const user = await db.user.findUnique({
-      where: {
-        id: session.id,
-      },
+      where: { id: session.id },
     });
-    if (user) {
-      return user;
-    }
+    if (user) return user;
   }
   notFound();
 }
