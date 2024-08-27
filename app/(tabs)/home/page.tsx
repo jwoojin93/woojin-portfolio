@@ -1,6 +1,5 @@
 import ProductList from "@/components/product-list";
 import db from "@/lib/db";
-import { PlusIcon } from "@heroicons/react/24/solid";
 import { Prisma } from "@prisma/client";
 import { unstable_cache as nextCache, revalidatePath } from "next/cache";
 import Link from "next/link";
@@ -40,14 +39,23 @@ export default async function Products() {
     "use server";
     revalidatePath("/home");
   };
+  console.log("initialProducts: ", initialProducts);
   return (
     <div>
-      <ProductList initialProducts={initialProducts} />
+      {initialProducts.length > 0 ? (
+        <ProductList initialProducts={initialProducts} />
+      ) : (
+        <div className="min-h-[100px] flex justify-center items-center flex-col">
+          <span>게시글이 없습니다.</span>
+          <span>게시글을 추가해주세요</span>
+        </div>
+      )}
+
       <Link
         href="/products/add"
-        className="bg-orange-500 flex items-center justify-center rounded-full size-16 fixed bottom-24 right-8 text-white transition-colors hover:bg-orange-400"
+        className="primary-btn flex items-center justify-center rounded-md p-3"
       >
-        <PlusIcon className="size-10" />
+        게시글 추가하기
       </Link>
     </div>
   );

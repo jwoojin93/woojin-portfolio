@@ -7,7 +7,7 @@ export default function Home() {
     <div className="flex flex-col items-center justify-between min-h-screen p-6">
       <div className="my-auto flex flex-col items-center gap-2 *:font-medium">
         <Suspense fallback={null}>
-          <div style={{ width: "100dvw", height: "50dvh" }}>
+          <div style={{ width: "100%", height: "50dvh" }}>
             <ThreeCanvas />
           </div>
         </Suspense>
