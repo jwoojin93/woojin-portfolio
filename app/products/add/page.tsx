@@ -26,22 +26,24 @@ export default function AddProduct() {
 
   /**
    * 게시물 이미지 이벤트
+   * 이미지에 파일이 들어오면 cloudflare 에서 upload url 을 가져옵니다.
    * @param event
    * @returns
    */
   const onImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("onImageChange");
     const {
       target: { files },
     } = event;
 
+    console.log("files: ", files);
+
     // 파일이 없을 경우 종료한다.
-    if (!files) {
-      return;
-    }
+    if (!files) return;
 
     // 파일과 preview url 을 상태에 저장한다.
     const file = files[0];
-    const url = URL.createObjectURL(file);
+    const url = URL.createObjectURL(file); // TODO(woojin): URL.createObjectURL 의 기능은?
     setPreview(url);
     setFile(file);
 
@@ -52,7 +54,7 @@ export default function AddProduct() {
       setUploadUrl(uploadURL);
       setValue(
         "photo",
-        `https://imagedelivery.net/aSbksvJjax-AUC7qVnaC4A/${id}`
+        `https://imagedelivery.net/TBSHUFfEQ6p_mgBGqIAsXA/${id}`
       );
     }
   };
@@ -61,6 +63,10 @@ export default function AddProduct() {
    * 제출하기 이벤트 처리
    */
   const onSubmit = handleSubmit(async (data: ProductType) => {
+    console.log("onSumbmit");
+    console.log("data: ", data);
+    console.log("file: ", file);
+
     // 파일이 없을 경우 종료한다.
     if (!file) return;
 
@@ -74,9 +80,7 @@ export default function AddProduct() {
     });
 
     // post 결과가 정상이 아니면 종료한다.
-    if (response.status !== 200) {
-      return;
-    }
+    if (response.status !== 200) return;
 
     // form 에 title, price, description, photo 를 추가한다.
     const formData = new FormData();
@@ -86,12 +90,15 @@ export default function AddProduct() {
     formData.append("photo", data.photo);
 
     const errors = await uploadProduct(formData);
+
+    console.log("errors: ", errors);
     if (errors) {
       // setError("");
     }
   });
 
   const onValid = async () => {
+    console.log("onValid 123");
     await onSubmit();
   };
 

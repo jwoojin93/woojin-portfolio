@@ -53,7 +53,7 @@ export async function uploadProduct(formData: FormData) {
 /**
  * cloudflare upload url 받아오기
  * cloudflare account id 를 넣어 direct upload url 을 요청한다.
- * cloudfalre 의 direct upload url 의 기능이 뭐였지? 그냥 upload url 과 무슨 차이였지?
+ * TODO(woojin): cloudfalre 의 direct upload url 의 기능이 뭐였지? 그냥 upload url 과 무슨 차이였지?
  * @returns
  */
 export async function getUploadUrl() {
