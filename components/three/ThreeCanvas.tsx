@@ -7,6 +7,7 @@ import { Suspense } from "react";
 import { useSnapshot } from "valtio";
 import CameraRig from "./CameraRig";
 import { YachtModel } from "./models/YachtModel";
+import { SmileEmojiModel } from "./models/SmileEmojiModel";
 
 const ThreeCanvas = () => {
   const { activeModel } = useSnapshot(globalState);
@@ -17,19 +18,18 @@ const ThreeCanvas = () => {
     <>
       <Canvas
         shadows
-        camera={{
-          fov: 25,
-        }}
-        gl={{
-          preserveDrawingBuffer: true,
-        }}
+        camera={{ fov: 25 }}
+        gl={{ preserveDrawingBuffer: true }}
         onClick={onClickCanvas}
       >
         <Suspense fallback={null}>
-          <ambientLight intensity={0.5} />
-          <pointLight position={[10, 10, 10]} intensity={0.75} />
+          <ambientLight intensity={3} />
+          <pointLight position={[0, 0, 3]} intensity={14} />
           <CameraRig>
-            <Center>{activeModel === "yacht" ? <YachtModel /> : null}</Center>
+            <Center>
+              <SmileEmojiModel />
+              {/* <YachtModel /> */}
+            </Center>
           </CameraRig>
         </Suspense>
       </Canvas>

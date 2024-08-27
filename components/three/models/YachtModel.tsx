@@ -27,10 +27,14 @@ type GLTFResult = GLTF & {
 };
 
 const yachtSrc = "/model/yacht_light.glb";
+// const yachtSrc = "/model/smile_emoji.glb";
 
 export function YachtModel(props: JSX.IntrinsicElements["group"]) {
   const { nodes, materials } = useGLTF(yachtSrc) as GLTFResult;
   const { themeColor } = useSnapshot(globalState);
+
+  console.log("nodes: ", nodes);
+  console.log("materials: ", materials);
 
   useFrame((_state, delta) =>
     dampC(materials["01_-_Default"].color, themeColor, 0.25, delta)

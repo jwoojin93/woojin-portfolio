@@ -46,7 +46,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={` ${roboto.variable} ${rubick.variable} ${metallica.variable} bg-neutral-900 text-white max-w-screen-sm mx-auto`}
+        className={` ${roboto.variable} ${rubick.variable} ${metallica.variable} bg-neutral-100 text-black max-w-screen-sm mx-auto`}
       >
         {children}
       </body>
