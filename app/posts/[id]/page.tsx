@@ -114,7 +114,7 @@ export default async function PostDetail({
   const { likeCount, isLiked } = await getCachedLikeStatus(id);
 
   return (
-    <div className="p-5 text-white">
+    <div className="p-5 ">
       <div className="flex items-center gap-2 mb-2">
         <Image
           width={28}

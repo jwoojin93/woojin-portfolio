@@ -91,6 +91,8 @@ export default async function ProductDetail({
   const product = await getCachedProduct(id);
   if (!product) notFound();
 
+  console.log("product: ", product);
+
   // 현재 product 가 접속한 유저의 product 인지 확인.
   const isOwner = await getIsOwner(product.userId);
 
@@ -133,7 +135,7 @@ export default async function ProductDetail({
         <Image
           className="object-cover"
           fill
-          src={`${product.photo}`}
+          src={`${product.photo}/public`}
           alt={product.title}
         />
       </div>
@@ -158,19 +160,19 @@ export default async function ProductDetail({
         <h1 className="text-2xl font-semibold">{product.title}</h1>
         <p>{product.description}</p>
       </div>
-      <div className="fixed w-full bottom-0  p-5 pb-10 bg-neutral-800 flex justify-between items-center max-w-screen-sm">
+      <div className="fixed w-full bottom-0  p-5 pb-10 bg-neutral-100 flex justify-between items-center max-w-screen-sm">
         <span className="font-semibold text-xl">
-          {formatToWon(product.price)}원
+          {formatToWon(product.price)}
         </span>
         {isOwner ? (
           <form action={revalidate}>
-            <button className="bg-red-500 px-5 py-2.5 rounded-md text-white font-semibold">
-              Revalidate title cache
+            <button className="primary-btn px-5 py-2.5 rounded-md ">
+              제목 캐시 초기화
             </button>
           </form>
         ) : null}
         <form action={createChatRoom}>
-          <button className="bg-orange-500 px-5 py-2.5 rounded-md text-white font-semibold">
+          <button className="primary-btn  px-5 py-2.5 rounded-md ">
             채팅하기
           </button>
         </form>
