@@ -62,9 +62,7 @@ export default function AddProduct() {
    */
   const onSubmit = handleSubmit(async (data: ProductType) => {
     // 파일이 없을 경우 종료한다.
-    if (!file) {
-      return;
-    }
+    if (!file) return;
 
     // 폼을 만들고 file을 추가한다.
     const cloudflareForm = new FormData();

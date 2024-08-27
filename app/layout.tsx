@@ -3,6 +3,9 @@ import { Roboto, Rubik_Scribble } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 
+/**
+ * roboto font 를 구글에서 가져옵니다.
+ */
 const roboto = Roboto({
   subsets: ["latin"],
   weight: ["400", "500"],
@@ -10,6 +13,9 @@ const roboto = Roboto({
   variable: "--roboto-text",
 });
 
+/**
+ * rubic scribble font 를 구글에서 가져옵니다.
+ */
 const rubick = Rubik_Scribble({
   weight: "400",
   style: "normal",
@@ -17,11 +23,17 @@ const rubick = Rubik_Scribble({
   variable: "--rubick-text",
 });
 
+/**
+ * motelica font 를 로컬에서 가져옵니다.
+ */
 const metallica = localFont({
   src: "./metallica.ttf",
   variable: "--metallica-text",
 });
 
+/**
+ * 메타데이터를 설정합니다
+ */
 export const metadata: Metadata = {
   title: {
     template: "%s | Woojin's Portfolio",
@@ -38,6 +50,11 @@ export const metadata: Metadata = {
   },
 };
 
+/**
+ * 공용 레이아웃을 설정합니다.
+ * @param param0
+ * @returns
+ */
 export default function RootLayout({
   children,
 }: Readonly<{

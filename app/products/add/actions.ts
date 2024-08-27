@@ -43,9 +43,7 @@ export async function uploadProduct(formData: FormData) {
             },
           },
         },
-        select: {
-          id: true,
-        },
+        select: { id: true },
       });
       redirect(`/products/${product.id}`);
     }
@@ -63,9 +61,7 @@ export async function getUploadUrl() {
     `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ACCOUNT_ID}/images/v2/direct_upload`,
     {
       method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.CLOUDFLARE_API_KEY}`,
-      },
+      headers: { Authorization: `Bearer ${process.env.CLOUDFLARE_API_KEY}` },
     }
   );
   const data = await response.json();

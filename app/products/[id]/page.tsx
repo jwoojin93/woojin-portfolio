@@ -77,6 +77,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   };
 }
 
+// product 상세 페이지입니다.
 export default async function ProductDetail({
   params,
 }: {
@@ -109,7 +110,10 @@ export default async function ProductDetail({
    */
   const createChatRoom = async () => {
     "use server";
-    const session = await getSession();
+
+    const session = await getSession(); // 세션 가져오기
+
+    // product 의 user id 와 접속중인 user id 를 이용하여 chatRoom 데이터베이스 컬럼을 생성합니다.
     const room = await db.chatRoom.create({
       data: {
         users: {
@@ -118,6 +122,8 @@ export default async function ProductDetail({
       },
       select: { id: true },
     });
+
+    // chatRoom 데이터베이스 컬럼이 생성되면 id 를 이용하여 채팅방으로 이동합니다.
     redirect(`/chats/${room.id}`);
   };
 
@@ -174,9 +180,11 @@ export default async function ProductDetail({
 }
 
 export async function generateStaticParams() {
+  // product 들을 가져옵니다.
   const products = await db.product.findMany({
     select: { id: true },
   });
 
+  // product 들을 id 만 string 화 하여 넘겨줍니다.
   return products.map((product) => ({ id: product.id + "" }));
 }

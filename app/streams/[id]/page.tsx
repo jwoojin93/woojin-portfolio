@@ -4,11 +4,14 @@ import { UserIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
+/**
+ * steam id 를 이용하여 stream 을 가져옵니다.
+ * @param id strema id
+ * @returns
+ */
 async function getStream(id: number) {
   const stream = await db.liveStream.findUnique({
-    where: {
-      id,
-    },
+    where: { id },
     select: {
       title: true,
       stream_key: true,
@@ -25,20 +28,22 @@ async function getStream(id: number) {
   return stream;
 }
 
+// 스트리밍 상세 페이지 입니다.
 export default async function StreamDetail({
   params,
 }: {
   params: { id: string };
 }) {
+  // staem id 가 없을 경우 not found 를 호출한다.
   const id = Number(params.id);
-  if (isNaN(id)) {
-    return notFound();
-  }
+  if (isNaN(id)) return notFound();
+
+  // stream 이 없을 겨웅 notfound 를 호출한다.
   const stream = await getStream(id);
-  if (!stream) {
-    return notFound();
-  }
-  const session = await getSession();
+  if (!stream) return notFound();
+
+  const session = await getSession(); // 세션 가져오기
+
   return (
     <div className="p-10">
       <div className="relative aspect-video">
