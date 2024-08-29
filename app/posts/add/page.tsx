@@ -67,26 +67,26 @@ export default function AddPost() {
     console.log("file: ", file);
 
     // 파일이 없을 경우 종료한다.
-    if (!file) return;
+    // if (!file) return;
 
     // 폼을 만들고 file을 추가한다.
-    const cloudflareForm = new FormData();
-    cloudflareForm.append("file", file);
-
-    const response = await fetch(uploadUrl, {
-      method: "post",
-      body: cloudflareForm,
-    });
-
-    // post 결과가 정상이 아니면 종료한다.
-    if (response.status !== 200) return;
+    if (file) {
+      const cloudflareForm = new FormData();
+      cloudflareForm.append("file", file);
+      const response = await fetch(uploadUrl, {
+        method: "post",
+        body: cloudflareForm,
+      });
+      // post 결과가 정상이 아니면 종료한다.
+      if (response.status !== 200) return;
+    }
 
     // form 에 title, description, photo 를 추가한다.
     const formData = new FormData();
     formData.append("title", data.title);
     formData.append("description", data.description);
     if (data.photo) formData.append("photo", data.photo);
-
+    else formData.append("photo", "");
     const errors = await uploadPost(formData);
     console.log("errors: ", errors);
   });
@@ -94,6 +94,7 @@ export default function AddPost() {
   const onValid = async () => {
     console.log("onValid 123");
     await onSubmit();
+    console.log("onValid 333");
   };
 
   return (

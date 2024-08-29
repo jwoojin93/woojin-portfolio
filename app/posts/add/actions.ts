@@ -11,6 +11,8 @@ import { postSchema } from "./schema";
  * @returns
  */
 export async function uploadPost(formData: FormData) {
+  console.log("uploadPost");
+  console.log("formData: ", formData);
   // photo, title, price, description 정보를 담은 data 를 만든다.
   const data = {
     photo: formData.get("photo"),
