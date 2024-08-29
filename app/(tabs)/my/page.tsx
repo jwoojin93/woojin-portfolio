@@ -20,7 +20,7 @@ async function Username() {
   return <h1 className="mb-5 mt-5">Welcome! {user?.username}!</h1>;
 }
 
-export default async function Profile() {
+export default async function MyPage() {
   const logOut = async () => {
     "use server";
     const session = await getSession();

@@ -68,7 +68,7 @@ export async function logIn(prevState: any, formData: FormData) {
 
       await session.save();
 
-      redirect("/profile");
+      redirect("/my");
     } else {
       return {
         fieldErrors: {

@@ -162,8 +162,8 @@ export async function smsLogIn(prevState: ActionState, formData: FormData) {
         where: { id: token!.id },
       });
 
-      // SMS 인증이 완료되면 profile 페이지로 이동합니다..?
-      redirect("/profile");
+      // SMS 인증이 완료되면 my 페이지로 이동합니다..?
+      redirect("/my");
     }
   }
 }
