@@ -17,7 +17,7 @@ async function getUser() {
 async function Username() {
   // await new Promise((resolve) => setTimeout(resolve, 10000));
   const user = await getUser();
-  return <h1>Welcome! {user?.username}!</h1>;
+  return <h1 className="mb-5 mt-5">Welcome! {user?.username}!</h1>;
 }
 
 export default async function Profile() {
@@ -33,7 +33,7 @@ export default async function Profile() {
         <Username />
       </Suspense>
       <form action={logOut}>
-        <button>Log out</button>
+        <button className="primary-btn p-3">Log out</button>
       </form>
     </div>
   );

@@ -36,6 +36,8 @@ export async function startStream(_: any, formData: FormData) {
   const data = await response.json();
   const session = await getSession();
 
+  console.log("data: ", data);
+
   // liveStream 데이터베이스 컬럼을 생성합니다.
   // title, steam_id, stream_key, userId 가 포함됩니다.
   // stream id 를 반환합니다.

@@ -1,17 +1,18 @@
 import db from "@/lib/db";
 import getSession from "@/lib/session";
 import { formatToTimeAgo } from "@/lib/utils";
-import { EyeIcon, HandThumbUpIcon } from "@heroicons/react/24/solid";
-import { HandThumbUpIcon as OutlineHandThumbUpIcon } from "@heroicons/react/24/outline";
-import { unstable_cache as nextCache, revalidateTag } from "next/cache";
+import { EyeIcon } from "@heroicons/react/24/solid";
+import { unstable_cache as nextCache } from "next/cache";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import LikeButton from "@/components/like-button";
+import { IronSession } from "iron-session";
+import { SessionContext } from "twilio/lib/rest/proxy/v1/service/session";
 
 /**
  * post id 를 이용하여 post 를 가져옵니다.
  * @param id
- * @returns
+ * @returns post
  */
 async function getPost(id: number) {
   try {
@@ -54,8 +55,15 @@ const getCachedPost = nextCache(getPost, ["post-detail"], {
  * @param postId
  * @returns
  */
-async function getLikeStatus(postId: number) {
-  const session = await getSession(); // 세션 가져오기
+interface SessionContent {
+  id?: number;
+}
+
+async function getLikeStatus(
+  postId: number,
+  session: IronSession<SessionContent>
+) {
+  // const session = await getSession(); // 세션 가져오기
 
   /**
    * post id 와 user id 를 사용하여 like 여부를 조회합니다.
@@ -89,11 +97,17 @@ async function getLikeStatus(postId: number) {
  * @param postId
  * @returns
  */
-function getCachedLikeStatus(postId: number) {
-  const cachedOperation = nextCache(getLikeStatus, ["product-like-status"], {
-    tags: [`like-status-${postId}`],
-  });
-  return cachedOperation(postId);
+async function getCachedLikeStatus(postId: number) {
+  const session = await getSession();
+
+  const cachedOperation = nextCache(
+    () => getLikeStatus(postId, session),
+    ["product-like-status"],
+    {
+      tags: [`like-status-${postId}`],
+    }
+  );
+  return cachedOperation();
 }
 
 // 게시물 상세 페이지 입니다.
@@ -116,13 +130,13 @@ export default async function PostDetail({
   return (
     <div className="p-5 ">
       <div className="flex items-center gap-2 mb-2">
-        <Image
+        {/* <Image
           width={28}
           height={28}
           className="size-7 rounded-full"
           src={post.user.avatar!}
           alt={post.user.username}
-        />
+        /> */}
         <div>
           <span className="text-sm font-semibold">{post.user.username}</span>
           <div className="text-xs">

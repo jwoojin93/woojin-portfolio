@@ -5,6 +5,39 @@ import getSession from "@/lib/session";
 import { revalidateTag } from "next/cache";
 
 /**
+ * post id 를 이용하여 좋아요 상태를 가져옵니다.
+ * @param postId
+ * @returns
+ */
+export async function getLikeStatus(postId: number) {
+  const session = await getSession(); // 세션 가져오기
+
+  /**
+   * post id 와 user id 를 사용하여 like 여부를 조회합니다.
+   */
+  const isLiked = await db.like.findUnique({
+    where: {
+      id: {
+        postId,
+        userId: session.id!,
+      },
+    },
+  });
+
+  /**
+   * like database 의 수를 조회합니다.
+   */
+  const likeCount = await db.like.count({
+    where: { postId },
+  });
+
+  return {
+    likeCount,
+    isLiked: Boolean(isLiked),
+  };
+}
+
+/**
  * 좋아요 추가 기능
  * 게시물 id 와, 유저 id 를 가져와서 like database 를 생성합니다.
  * like-statis-[postId] tag 를 사용하여 cache 를 초기화 합니다.
