@@ -28,7 +28,7 @@ export default function TabBar() {
         ) : (
           <OutlineHomeIcon className="w-7 h-7" />
         )}
-        <span>나는?</span>
+        <span>내소개</span>
       </Link>
       <Link href="/post" className="flex flex-col items-center gap-px">
         {pathname === "/post" ? (

@@ -1,7 +1,5 @@
-import ProductList from "@/components/product-list";
 import db from "@/lib/db";
 import { Prisma } from "@prisma/client";
-import Link from "next/link";
 
 async function getInitialProducts() {
   const products = await db.product.findMany({
@@ -31,25 +29,5 @@ export const metadata = {
 // export const revalidate = 60;
 
 export default async function Products() {
-  const initialProducts = await getInitialProducts();
-
-  return (
-    <div>
-      {initialProducts.length > 0 ? (
-        <ProductList initialProducts={initialProducts} />
-      ) : (
-        <div className="min-h-[100px] flex justify-center items-center flex-col">
-          <span>게시글이 없습니다.</span>
-          <span>게시글을 추가해주세요</span>
-        </div>
-      )}
-
-      <Link
-        href="/products/add"
-        className="primary-btn flex items-center justify-center rounded-md p-3"
-      >
-        게시글 추가하기
-      </Link>
-    </div>
-  );
+  return <div>나는 누구인가</div>;
 }

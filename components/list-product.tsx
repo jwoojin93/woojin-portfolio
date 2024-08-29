@@ -4,15 +4,15 @@ import Link from "next/link";
 
 interface ListProductProps {
   title: string;
-  price: number;
+  // price: number;
   created_at: Date;
-  photo: string;
+  photo: string | null;
   id: number;
 }
 
 export default function ListProduct({
   title,
-  price,
+  // price,
   created_at,
   photo,
   id,
@@ -20,19 +20,21 @@ export default function ListProduct({
   return (
     <Link href={`/products/${id}`} className="flex gap-5">
       <div className="relative size-28 rounded-md overflow-hidden">
-        <Image
-          fill
-          src={`${photo}/avatar`}
-          className="object-cover"
-          alt={title}
-        />
+        {photo && (
+          <Image
+            fill
+            src={`${photo}/avatar`}
+            className="object-cover"
+            alt={title}
+          />
+        )}
       </div>
       <div className="flex flex-col gap-1 *:text-black">
         <span className="text-lg">{title}</span>
         <span className="text-sm text-neutral-500">
           {formatToTimeAgo(created_at.toString())}
         </span>
-        <span className="text-lg font-semibold">{formatToWon(price)}원</span>
+        {/* <span className="text-lg font-semibold">{formatToWon(price)}원</span> */}
       </div>
     </Link>
   );
