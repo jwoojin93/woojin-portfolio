@@ -9,118 +9,108 @@ datasource db {
 }
 
 model User {
-  id         Int          @id @default(autoincrement())
-  username   String       @unique
-  email      String?      @unique
-  password   String?
-  phone      String?      @unique
-  github_id  String?      @unique
-  avatar     String?
-  created_at DateTime     @default(now())
-  updated_at DateTime     @updatedAt
-  tokens     SMSToken[]
-  products   Product[]
-  posts      Post[]
-  comments   Comment[]
-  likes      Like[]
-  chat_rooms ChatRoom[]
-  messages   Message[]
-  LiveStream LiveStream[]
+  id         Int          @id @default(autoincrement())  // user id => 자동 증가
+  username   String       @unique // 유저 이름 => 유일해야 함
+  email      String?      @unique // 이메일 => 유일해야 함, 필수 항목 아님(sns 로그인 할 수도 있기 때문에?, 확인 필요 TODO(woojin)
+  password   String?              // 비밀번호 => 문자열(암호화 처리 됨) => TODO(woojin): 무슨암호화 였지?
+  phone      String?      @unique // 핸드폰 번호 => 유일해야 함, 필수 항목 아님(sns 로그인 할 수도 있기 때문에?, 확인 필요 TODO(woojin)
+  github_id  String?      @unique // github 아이디 => 유일해야 함, 필수 항목아님, 일반회원 일수도 있기 때문에
+  avatar     String?              // 프로필 이미지 => TODO(woojin): 이미지 주소였나?, 필수 아님, 일반 회원은 없을 수도 있기 때문에?, 확인 필요 TODO(woojin)
+  created_at DateTime     @default(now()) // 유저 생성일
+  updated_at DateTime     @updatedAt // 유저 수정일
+  tokens     SMSToken[]   // sms 인증 임시 토큰, 인증 요청 시 발급되고 인증 완료 시 삭제됨, 확인 필요, TODO(woojin)
+  products   Product[]    // 유저가 올린 제품들, post 로 합칠 예정이기 때문에 지워질 예정, TODO(woojin)
+  posts      Post[]       // 유저가 올린 게시글들
+  comments   Comment[]    // 유저가 남긴 댓글들
+  likes      Like[]       // 유저가 남긴 좋아요들
+  chat_rooms ChatRoom[]   // 유저와 관련된 채팅방들
+  messages   Message[]    // 유저가 보낸 메시지들
+  LiveStream LiveStream[] // 유저가 만든 스트리밍들
 }
 
 model SMSToken {
-  id         Int      @id @default(autoincrement())
-  token      String   @unique
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId     Int
+  id         Int      @id @default(autoincrement()) // sms token id (자동 증가함)
+  token      String   @unique         // sms 토큰 문자열
+  created_at DateTime @default(now()) // sms 토큰 생성일
+  updated_at DateTime @updatedAt      // sms 토큰 수정일 => 수정일이 왜필요하지? 수정도 되나? 확인 필요, TODO(woojin)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade) // sms 토큰과 관련된 유저
+  userId     Int // 유저 id
 }
 
+// 제품들, post 로 합쳐질 예정, TODO(woojin)
 model Product {
-  id          Int    @id @default(autoincrement())
-  title       String
-  price       Float
-  photo       String
-  description String
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId     Int
+  id          Int    @id @default(autoincrement()) // 제품 id
+  title       String // 제품 제목
+  price       Float // 제품 가격
+  photo       String // 제품 이미지 (필수로 해야할까? 옵션으로 하는 게 낫지 않을까? TODO(woojin))
+  description String // 설명 (이것도 옵션으로 하는 게 낫지 않을까? TODO(woojin))
+  created_at DateTime @default(now()) // 제품 생성일
+  updated_at DateTime @updatedAt      // 제품 수정일
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade) // 제품과 관련된 유저, 유저가 삭제될 경우 제품도 삭제됨
+  userId     Int // 유저 id
 }
 
 model Post {
-  id          Int     @id @default(autoincrement())
-  title       String
-  description String?
-  views       Int     @default(0)
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-
-  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId   Int
-  comments Comment[]
-  likes    Like[]
+  id          Int     @id @default(autoincrement()) // 게시글 id
+  title       String    // 제목
+  description String?   // 설명 (옵션, 얘는 옵션으로 했네, 얘 따라가면 될듯)
+  photo       String? // 제품 이미지 (필수로 해야할까? 옵션으로 하는 게 낫지 않을까? TODO(woojin))
+  views       Int     @default(0)       // 조회수, 기본값0
+  created_at DateTime @default(now())   // 생성일
+  updated_at DateTime @updatedAt        // 수정일
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade) // 게시글 생성 유저
+  userId   Int        // 유저 id 
+  comments Comment[]  // 댓글들
+  likes    Like[]     // 좋아요들
 }
 
 model Comment {
-  id      Int    @id @default(autoincrement())
-  payload String
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
-  userId Int
-  postId Int
+  id      Int    @id @default(autoincrement())  // 댓글 id
+  payload String                                // 댓글 내용
+  created_at DateTime @default(now())           // 생성일
+  updated_at DateTime @updatedAt                // 수정일
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)  // 댓글을 생성한 유저, 유저가 삭제되면 댓글도 삭제됨
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)  // 댓글을 단 게시글, 게시글이 삭제되면 댓글도 삭제됨
+  userId Int // 유저 id
+  postId Int // 게시글 id
 }
 
 model Like {
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
-  userId Int
-  postId Int
-
-  @@id(name: "id", [userId, postId])
+  created_at DateTime @default(now()) // 좋아요 생성일
+  updated_at DateTime @updatedAt      // 좋아요 수정일
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade) // 좋아요를 누른 유저, 유저 삭제되면 좋아요 삭제됨
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade) // 좋아요가 달린 게시글, 게시글이 삭제되면 좋아요 삭제됨
+  userId Int // 유저 id
+  postId Int // 게시글 id
+  @@id(name: "id", [userId, postId]) // 이거 뭐였지? 확인해보기. TODO(woojin)
 }
 
 model ChatRoom {
-  id    String @id @default(cuid())
-  users User[]
-
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
-  messages   Message[]
+  id    String @id @default(cuid()) // 채팅방 아이디, cuid 가 뭐였지? TODO(woojin)
+  users User[] // 채팅방에 속한 유저들
+  created_at DateTime  @default(now()) // 생성일
+  updated_at DateTime  @updatedAt      // 수정일
+  messages   Message[]                 // 주고받은 메시지들
 }
 
 model Message {
-  id      Int    @id @default(autoincrement())
-  payload String
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-
-  room       ChatRoom @relation(fields: [chatRoomId], references: [id])
-  user       User     @relation(fields: [userId], references: [id])
-  chatRoomId String
-  userId     Int
+  id      Int    @id @default(autoincrement()) // 메시지 id (자동 증가함)
+  payload String                               // 메시지 내용
+  created_at DateTime @default(now())          // 생성일
+  updated_at DateTime @updatedAt               // 수정일
+  room       ChatRoom @relation(fields: [chatRoomId], references: [id]) // 메시지가 들어있는 채팅방, 채팅방 삭제되면 메시지 삭제됨
+  user       User     @relation(fields: [userId], references: [id])     // 메시지를 보낸 유저, 유저가 삭제되면 메시지 삭제됨, (이건, 유저가 삭제되면 익명으로 남아야 되지 않나, cascade 로하는 게 맞을까? 고민해보기 TODO(woojin)) 
+  chatRoomId String // 채팅방 id
+  userId     Int    // 유저 id
 }
 
 model LiveStream {
-  id         Int    @id @default(autoincrement())
-  title      String
-  stream_key String
-  stream_id  String
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-
-  user   User @relation(fields: [userId], references: [id])
-  userId Int
+  id         Int    @id @default(autoincrement()) // 스트리밍 id
+  title      String                               // 스트리밍 제목
+  stream_key String                               // 스트리밍 key (키는 어디에 썻었지? TODO(woojin))
+  stream_id  String                               // 스트리밍 id (아이디는 어디에 썻었지? TODO(woojin))
+  created_at DateTime @default(now())             // 생성일
+  updated_at DateTime @updatedAt                  // 수정일
+  user   User @relation(fields: [userId], references: [id]) // 스트리밍을 생성한 유저, 유저가 삭제되면 스트리밍도 삭제됨
+  userId Int // 유저 id
 }

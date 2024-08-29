@@ -31,33 +31,46 @@ export default async function Life() {
   const posts = await getPosts();
   return (
     <div className="p-5 flex flex-col">
-      {posts.map((post) => (
-        <Link
-          key={post.id}
-          href={`/posts/${post.id}`}
-          className="pb-5 mb-5 border-b border-neutral-500 text-neutral-400 flex  flex-col gap-2 last:pb-0 last:border-b-0"
-        >
-          <h2 className=" text-lg font-semibold">{post.title}</h2>
-          <p>{post.description}</p>
-          <div className="flex items-center justify-between text-sm">
-            <div className="flex gap-4 items-center">
-              <span>{formatToTimeAgo(post.created_at.toString())}</span>
-              <span>·</span>
-              <span>조회 {post.views}</span>
+      {posts.length > 0 ? (
+        posts.map((post) => (
+          <Link
+            key={post.id}
+            href={`/posts/${post.id}`}
+            className="pb-5 mb-5 border-b border-neutral-500 text-neutral-400 flex  flex-col gap-2 last:pb-0 last:border-b-0"
+          >
+            <h2 className=" text-lg font-semibold">{post.title}</h2>
+            <p>{post.description}</p>
+            <div className="flex items-center justify-between text-sm">
+              <div className="flex gap-4 items-center">
+                <span>{formatToTimeAgo(post.created_at.toString())}</span>
+                <span>·</span>
+                <span>조회 {post.views}</span>
+              </div>
+              <div className="flex gap-4 items-center *:flex *:gap-1 *:items-center">
+                <span>
+                  <HandThumbUpIcon className="size-4" />
+                  {post._count.likes}
+                </span>
+                <span>
+                  <ChatBubbleBottomCenterIcon className="size-4" />
+                  {post._count.comments}
+                </span>
+              </div>
             </div>
-            <div className="flex gap-4 items-center *:flex *:gap-1 *:items-center">
-              <span>
-                <HandThumbUpIcon className="size-4" />
-                {post._count.likes}
-              </span>
-              <span>
-                <ChatBubbleBottomCenterIcon className="size-4" />
-                {post._count.comments}
-              </span>
-            </div>
-          </div>
-        </Link>
-      ))}
+          </Link>
+        ))
+      ) : (
+        <div className="min-h-[100px] flex justify-center items-center flex-col">
+          <span>게시글이 없습니다.</span>
+          <span>게시글을 추가해주세요</span>
+        </div>
+      )}
+      <Link
+        href="/posts/add"
+        className="primary-btn flex items-center justify-center rounded-md p-3"
+      >
+        게시글 추가하기
+      </Link>
     </div>
   );
 }

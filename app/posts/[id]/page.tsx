@@ -7,7 +7,6 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import LikeButton from "@/components/like-button";
 import { IronSession } from "iron-session";
-import { SessionContext } from "twilio/lib/rest/proxy/v1/service/session";
 
 /**
  * post id 를 이용하여 post 를 가져옵니다.
@@ -50,24 +49,20 @@ const getCachedPost = nextCache(getPost, ["post-detail"], {
   revalidate: 60,
 });
 
+interface SessionContent {
+  id?: number;
+}
+
 /**
  * post id 를 이용하여 좋아요 상태를 가져옵니다.
  * @param postId
  * @returns
  */
-interface SessionContent {
-  id?: number;
-}
-
 async function getLikeStatus(
   postId: number,
   session: IronSession<SessionContent>
 ) {
-  // const session = await getSession(); // 세션 가져오기
-
-  /**
-   * post id 와 user id 를 사용하여 like 여부를 조회합니다.
-   */
+  // post id 와 user id 를 사용하여 like 여부를 조회합니다.
   const isLiked = await db.like.findUnique({
     where: {
       id: {
@@ -77,9 +72,7 @@ async function getLikeStatus(
     },
   });
 
-  /**
-   * like database 의 수를 조회합니다.
-   */
+  // like database 의 수를 조회합니다.
   const likeCount = await db.like.count({
     where: { postId },
   });
