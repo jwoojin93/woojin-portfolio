@@ -1,10 +1,7 @@
 import ProductList from "@/components/product-list";
 import db from "@/lib/db";
 import { Prisma } from "@prisma/client";
-import { unstable_cache as nextCache, revalidatePath } from "next/cache";
 import Link from "next/link";
-
-const getCachedProducts = nextCache(getInitialProducts, ["home-products"]);
 
 async function getInitialProducts() {
   const products = await db.product.findMany({
@@ -27,7 +24,7 @@ export type InitialProducts = Prisma.PromiseReturnType<
 >;
 
 export const metadata = {
-  title: "Home",
+  title: "Who am I?",
 };
 
 //export const dynamic = "force-dynamic";
@@ -35,11 +32,6 @@ export const metadata = {
 
 export default async function Products() {
   const initialProducts = await getInitialProducts();
-
-  const revalidate = async () => {
-    "use server";
-    revalidatePath("/home");
-  };
 
   return (
     <div>

@@ -27,7 +27,7 @@ async function getPosts() {
 
 export const metadata = { title: "동네생활" };
 
-export default async function Life() {
+export default async function Post() {
   const posts = await getPosts();
   return (
     <div className="p-5 flex flex-col">

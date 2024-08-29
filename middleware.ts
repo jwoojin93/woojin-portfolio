@@ -30,8 +30,8 @@ export async function middleware(request: NextRequest) {
     // session 이 없고, 공용 url 이 아닐 경우 '/' 로 이동합니다.
     if (!exists) return NextResponse.redirect(new URL("/", request.url));
   } else {
-    // session 이 있지만 공용 url 이 경우 '/home' 으로 이동합니다..? => 잘못 이해했나? 왜 'home' 으로 가지? 요청에 있는 url 로 가면 되지 않나?
-    if (exists) return NextResponse.redirect(new URL("/home", request.url));
+    // session 이 있지만 공용 url 이 경우 '/intro' 으로 이동합니다..? => 잘못 이해했나? 왜 'intro' 으로 가지? 요청에 있는 url 로 가면 되지 않나?
+    if (exists) return NextResponse.redirect(new URL("/intro", request.url));
   }
 }
 
