@@ -5,7 +5,6 @@ export const metadata = { title: "Who am I?" };
 export default async function IntroPage() {
   return (
     <div className="pb-28">
-      {/* rubic text 폰트로 */}
       <h1 className="text-7xl text-center mt-5 font-rubick text-gray-900 font-extrabold">
         Who Am I
       </h1>

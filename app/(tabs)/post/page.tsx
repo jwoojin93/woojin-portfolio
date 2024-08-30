@@ -29,6 +29,9 @@ export default async function Post() {
   const posts = await getPosts();
   return (
     <div className="p-5 flex flex-col pb-36">
+      <h1 className="text-7xl text-center mt-5 mb-10 font-rubick text-gray-900 font-extrabold">
+        Post
+      </h1>
       {posts.length > 0 ? (
         posts.map((post) => <ListPost key={post.id} {...post} />)
       ) : (

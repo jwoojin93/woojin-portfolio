@@ -29,6 +29,9 @@ export default async function MyPage() {
   };
   return (
     <div>
+      <h1 className="text-7xl text-center mt-5 mb-10 font-rubick text-gray-900 font-extrabold">
+        My Profile
+      </h1>
       <Suspense fallback={"Welcome!"}>
         <Username />
       </Suspense>
