@@ -8,7 +8,7 @@ export default function Intro() {
       <div className="my-auto flex flex-col items-center gap-2 *:font-medium">
         <Suspense fallback={null}>
           <div style={{ width: "100%", height: "50dvh" }}>
-            <ThreeCanvas />
+            <ThreeCanvas name="smile-emoji" />
           </div>
         </Suspense>
 

@@ -7,11 +7,13 @@ Source: https://sketchfab.com/3d-models/yacht-0dd451f295d049cea20c17d3ffa87ee3
 Title: Yacht
 */
 import { useGLTF } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
 import { useState } from "react";
 import * as THREE from "three";
 import { GLTF } from "three-stdlib";
 import { useSpring, animated, config } from "@react-spring/three";
+import { useFrame } from "@react-three/fiber";
+import { damp3 } from "maath/easing";
+import { useRef } from "react";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -27,10 +29,18 @@ type GLTFResult = GLTF & {
   };
 };
 
-const yachtSrc = "/model/smile_emoji.glb";
+const emojiSrc = "/model/smile_emoji.glb";
 
 export function SmileEmojiModel(props: JSX.IntrinsicElements["group"]) {
-  const { nodes, materials } = useGLTF(yachtSrc) as GLTFResult;
+  const cameraGroupRef = useRef<THREE.Group>(null);
+
+  useFrame(({ camera, pointer }, delta) => {
+    let targetPosition: [x: number, y: number, z: number] = [0, 0, 2.5]; // 삼항 연산자는 깨끗한 코드의 옵션이 아닙니다
+    damp3(camera.position, targetPosition, 0, delta);
+    cameraGroupRef.current!.rotation.y += 0.02;
+  });
+
+  const { nodes, materials } = useGLTF(emojiSrc) as GLTFResult;
 
   const [isClicked, setClicked] = useState(false);
 
@@ -48,7 +58,12 @@ export function SmileEmojiModel(props: JSX.IntrinsicElements["group"]) {
   console.log("materials: ", materials);
 
   return (
-    <group {...props} dispose={null} onClick={() => setClicked(!isClicked)}>
+    <group
+      ref={cameraGroupRef}
+      {...props}
+      dispose={null}
+      onClick={() => setClicked(!isClicked)}
+    >
       {/* 머리통 */}
       <animated.mesh
         // @ts-ignore
@@ -102,4 +117,4 @@ export function SmileEmojiModel(props: JSX.IntrinsicElements["group"]) {
   );
 }
 
-useGLTF.preload(yachtSrc);
+useGLTF.preload(emojiSrc);

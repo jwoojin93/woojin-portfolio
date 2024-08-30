@@ -1,36 +1,27 @@
 "use client";
 
-import { globalState } from "@/store/globalState";
 import { Center, Loader } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Suspense } from "react";
-import { useSnapshot } from "valtio";
-import CameraRig from "./CameraRig";
-import { YachtModel } from "./models/YachtModel";
 import { SmileEmojiModel } from "./models/SmileEmojiModel";
+import { MacbookLaptopModel } from "./models/MacbookLaptopModel";
+import { AirplaneModel } from "./models/Airplane";
 
-const ThreeCanvas = () => {
-  const { activeModel } = useSnapshot(globalState);
-
-  const onClickCanvas = () => (globalState.activePicker = null);
-
+const ThreeCanvas = ({ name }: { name: String }) => {
   return (
     <>
-      <Canvas
-        shadows
-        camera={{ fov: 25 }}
-        gl={{ preserveDrawingBuffer: true }}
-        onClick={onClickCanvas}
-      >
+      <Canvas shadows camera={{ fov: 25 }} gl={{ preserveDrawingBuffer: true }}>
         <Suspense fallback={null}>
-          <ambientLight intensity={3} />
-          <pointLight position={[0, 0, 3]} intensity={14} />
-          <CameraRig>
-            <Center>
-              <SmileEmojiModel />
-              {/* <YachtModel /> */}
-            </Center>
-          </CameraRig>
+          <ambientLight intensity={name === "airplane" ? 2 : 3} />
+          <pointLight
+            position={[0, 0, 3]}
+            intensity={name === "airplane" ? 10 : 14}
+          />
+          <Center>
+            {name === "smile-emoji" && <SmileEmojiModel />}
+            {name === "macbook-laptop" && <MacbookLaptopModel />}
+            {name === "airplane" && <AirplaneModel />}
+          </Center>
         </Suspense>
       </Canvas>
       <Loader />
