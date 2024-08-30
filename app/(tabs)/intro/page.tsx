@@ -2,9 +2,9 @@ import ThreeCanvas from "@/components/three/ThreeCanvas";
 
 export const metadata = { title: "Who am I?" };
 
-export default async function Products() {
+export default async function IntroPage() {
   return (
-    <div>
+    <div className="pb-28">
       {/* rubic text 폰트로 */}
       <h1 className="text-7xl text-center mt-5 font-rubick text-gray-900 font-extrabold">
         Who Am I
@@ -19,18 +19,11 @@ export default async function Products() {
         안녕하세요, 화면으로 유저와 소통하는 프론트 개발자 정우진 입니다.
       </p>
 
-      {/* <p>
-        저는 농구를 좋아하고, 주짓수를 좋아하고, 친구들과 시간 보내는 것을
-        좋아합니다.
-      </p>
-      <p className="text-gray-600 text-sm">
-        주짓수는 시작한지 얼마안됐습니다..ㅎㅎ
-      </p> */}
-
-      {/* 비행기 3d 넣기 */}
+      {/* 비행기 3d */}
       <div style={{ width: "100%", height: "30dvh" }}>
         <ThreeCanvas name="airplane" />
       </div>
+
       <p className="text-center">
         저는 2012년 부터 2017년까지 공군부사관으로 했어요
       </p>
@@ -48,7 +41,6 @@ export default async function Products() {
         </a>
         를 눌러주세요.
       </p>
-      {/* 구글 슬라이드 링크 넣기 (새창으로 띄우기) */}
     </div>
   );
 }

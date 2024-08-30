@@ -44,7 +44,7 @@ export async function GET(request: NextRequest) {
 
     await session.save();
 
-    return redirect("/my");
+    return redirect("/intro");
   }
 
   const newUser = await db.user.create({
@@ -61,5 +61,5 @@ export async function GET(request: NextRequest) {
 
   await session.save();
 
-  return redirect("/my");
+  return redirect("/intro");
 }

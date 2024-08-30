@@ -163,7 +163,7 @@ export async function smsLogIn(prevState: ActionState, formData: FormData) {
       });
 
       // SMS 인증이 완료되면 my 페이지로 이동합니다..?
-      redirect("/my");
+      redirect("/intro");
     }
   }
 }

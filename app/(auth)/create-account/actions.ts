@@ -105,6 +105,6 @@ export async function createAccount(prevState: any, formData: FormData) {
 
     await session.save();
 
-    redirect("/my");
+    redirect("/intro");
   }
 }
