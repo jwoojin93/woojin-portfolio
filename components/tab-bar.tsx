@@ -30,6 +30,14 @@ export default function TabBar() {
         )}
         <span>Intro</span>
       </Link>
+      <Link href="/readme" className="flex flex-col items-center gap-px">
+        {pathname === "/readme" ? (
+          <SolidNewspaperIcon className="w-7 h-7" />
+        ) : (
+          <OutlineNewspaperIcon className="w-7 h-7" />
+        )}
+        <span>Readme</span>
+      </Link>
       <Link href="/post" className="flex flex-col items-center gap-px">
         {pathname === "/post" ? (
           <SolidNewspaperIcon className="w-7 h-7" />
@@ -46,14 +54,14 @@ export default function TabBar() {
         )}
         <span>Chat</span>
       </Link>
-      <Link href="/stream" className="flex flex-col items-center gap-px">
+      {/* <Link href="/stream" className="flex flex-col items-center gap-px">
         {pathname === "/stream" ? (
           <SolidVideoCameraIcon className="w-7 h-7" />
         ) : (
           <OutlineVideoCameraIcon className="w-7 h-7" />
         )}
         <span>Stream</span>
-      </Link>
+      </Link> */}
       <Link href="/my" className="flex flex-col items-center gap-px">
         {pathname === "/my" ? (
           <SolidUserIcon className="w-7 h-7" />
