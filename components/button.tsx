@@ -17,7 +17,7 @@ export default function Button({ text }: ButtonProps) {
     >
       {pending ? (
         <>
-          Loading <LoadingSpinner className="w-4 h-4 fill-white" />
+          Loading <LoadingSpinner className="" />
         </>
       ) : (
         text

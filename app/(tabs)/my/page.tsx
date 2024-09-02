@@ -1,3 +1,4 @@
+import Button from "@/components/button";
 import Title from "@/components/title";
 import db from "@/lib/db";
 import getSession from "@/lib/session";
@@ -34,7 +35,7 @@ export default async function MyPage() {
         <Username />
       </Suspense>
       <form action={logOut}>
-        <button className="primary-btn">Log out</button>
+        <Button text="Log out" />
       </form>
     </div>
   );
