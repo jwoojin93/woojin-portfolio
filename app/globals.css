@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
 @layer base {
   a {
     @apply text-orange-600;
@@ -16,6 +21,6 @@
 
 @layer components {
   .primary-btn {
-    @apply w-full  bg-orange-800 text-white  font-medium  rounded-md text-center hover:bg-orange-700 transition-colors;
+    @apply w-full  bg-orange-800 text-white  font-medium  rounded-md text-center hover:bg-orange-700 transition-colors p-2;
   }
 }

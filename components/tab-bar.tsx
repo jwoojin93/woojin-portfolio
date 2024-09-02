@@ -16,60 +16,71 @@ import {
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Url } from "next/dist/shared/lib/router/router";
+
+const TabBtn = ({
+  children,
+  href,
+}: {
+  children?: React.ReactNode;
+  href: Url;
+}) => {
+  return (
+    <Link
+      href={href}
+      className="flex flex-col items-center gap-px flex-1 py-4 [&>svg]:w-7 [&>svg]:h-7"
+    >
+      {children}
+    </Link>
+  );
+};
 
 export default function TabBar() {
   const pathname = usePathname();
 
   return (
-    <div className="fixed bottom-0 w-full mx-auto max-w-screen-sm grid grid-cols-5 border-neutral-100 border-t px-5 py-3 *:text-orange-950 bg-neutral-100">
-      <Link href="/intro" className="flex flex-col items-center gap-px">
-        {pathname === "/intro" ? (
-          <SolidHomeIcon className="w-7 h-7" />
-        ) : (
-          <OutlineHomeIcon className="w-7 h-7" />
-        )}
+    <div className="fixed left-0 bottom-0 w-full border-orange-950 border-t  *:text-orange-950 bg-neutral-100 flex ">
+      <TabBtn href="/intro">
+        {pathname === "/intro" ? <SolidHomeIcon /> : <OutlineHomeIcon />}
         <span>Intro</span>
-      </Link>
-      <Link href="/readme" className="flex flex-col items-center gap-px">
+      </TabBtn>
+
+      <TabBtn href="/readme">
         {pathname === "/readme" ? (
-          <SolidNewspaperIcon className="w-7 h-7" />
+          <SolidNewspaperIcon />
         ) : (
-          <OutlineNewspaperIcon className="w-7 h-7" />
+          <OutlineNewspaperIcon />
         )}
         <span>Readme</span>
-      </Link>
-      <Link href="/post" className="flex flex-col items-center gap-px">
+      </TabBtn>
+
+      <TabBtn href="/post">
         {pathname === "/post" ? (
-          <SolidNewspaperIcon className="w-7 h-7" />
+          <SolidNewspaperIcon />
         ) : (
-          <OutlineNewspaperIcon className="w-7 h-7" />
+          <OutlineNewspaperIcon />
         )}
         <span>Post</span>
-      </Link>
-      <Link href="/chat" className="flex flex-col items-center gap-px">
-        {pathname === "/chat" ? (
-          <SolidChatIcon className="w-7 h-7" />
-        ) : (
-          <OutlineChatIcon className="w-7 h-7" />
-        )}
+      </TabBtn>
+
+      <TabBtn href="/chat">
+        {pathname === "/chat" ? <SolidChatIcon /> : <OutlineChatIcon />}
         <span>Chat</span>
-      </Link>
-      {/* <Link href="/stream" className="flex flex-col items-center gap-px">
+      </TabBtn>
+
+      {/* <TabBtn href="/stream">
         {pathname === "/stream" ? (
-          <SolidVideoCameraIcon className="w-7 h-7" />
+          <SolidVideoCameraIcon />
         ) : (
-          <OutlineVideoCameraIcon className="w-7 h-7" />
+          <OutlineVideoCameraIcon />
         )}
         <span>Stream</span>
-      </Link> */}
-      <Link href="/my" className="flex flex-col items-center gap-px">
-        {pathname === "/my" ? (
-          <SolidUserIcon className="w-7 h-7" />
-        ) : (
-          <OutlineUserIcon className="w-7 h-7" />
-        )}
+      </TabBtn> */}
+
+      <TabBtn href="/my">
+        {pathname === "/my" ? <SolidUserIcon /> : <OutlineUserIcon />}
         <span>My</span>
-      </Link>
+      </TabBtn>
     </div>
   );
 }

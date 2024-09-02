@@ -215,7 +215,7 @@ export default async function PostDetail({
       </div>
 
       <form action={isOwner ? deletePost : createChatRoom}>
-        <button className="primary-btn px-5 py-2.5 mt-16">
+        <button className="primary-btn mt-16">
           {isOwner ? "삭제하기" : "채팅하기"}
         </button>
       </form>

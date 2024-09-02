@@ -1,4 +1,5 @@
 import ListPost from "@/components/list-post";
+import Title from "@/components/title";
 import db from "@/lib/db";
 
 import Link from "next/link";
@@ -29,9 +30,7 @@ export default async function Post() {
   const posts = await getPosts();
   return (
     <div className="p-5 flex flex-col pb-36">
-      <h1 className="text-7xl text-center mt-5 mb-10 font-rubick text-gray-900 font-extrabold">
-        Post
-      </h1>
+      <Title value="Post" />
       {posts.length > 0 ? (
         posts.map((post) => <ListPost key={post.id} {...post} />)
       ) : (
@@ -40,10 +39,7 @@ export default async function Post() {
           <span>게시글을 추가해주세요</span>
         </div>
       )}
-      <Link
-        href="/posts/add"
-        className="primary-btn flex items-center justify-center rounded-md p-3"
-      >
+      <Link href="/posts/add" className="primary-btn ">
         게시글 추가하기
       </Link>
     </div>

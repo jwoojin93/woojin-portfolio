@@ -1,16 +1,15 @@
 import ThreeCanvas from "@/components/three/ThreeCanvas";
+import Title from "@/components/title";
 
 export const metadata = { title: "Who am I?" };
 
 export default async function IntroPage() {
   return (
     <div className="pb-28">
-      <h1 className="text-7xl text-center mt-5 font-rubick text-gray-900 font-extrabold">
-        Who Am I
-      </h1>
+      <Title value="Who Am I" />
 
       {/* 노트북, 데스크탑 화면 3d */}
-      <div style={{ width: "100%", height: "30dvh" }}>
+      <div className="w-full h-[30dvh]">
         <ThreeCanvas name="macbook-laptop" />
       </div>
 
@@ -19,7 +18,7 @@ export default async function IntroPage() {
       </p>
 
       {/* 비행기 3d */}
-      <div style={{ width: "100%", height: "30dvh" }}>
+      <div className="w-full h-[30dvh]">
         <ThreeCanvas name="airplane" />
       </div>
 
@@ -27,7 +26,7 @@ export default async function IntroPage() {
         저는 2012년 부터 2017년까지 공군부사관으로 했어요
       </p>
       <p className="text-gray-600 text-sm text-center">
-        물론 비행기를 몰진 않았습니다..🫥
+        비행기를 몰진 않았습니다..🫥
       </p>
 
       <p className="mt-10 text-center">
