@@ -19,6 +19,17 @@ const config: Config = {
       borderRadius: {
         "sexy-name": "11.11px",
       },
+      keyframes: {
+        "mini-ping": {
+          "75%, 100%": {
+            transform: "scale(1.02)",
+            opacity: "0",
+          },
+        },
+      },
+      animation: {
+        "mini-ping": "mini-ping 1s cubic-bezier(0, 0, 0.2, 1) infinite",
+      },
     },
   },
   plugins: [require("@tailwindcss/forms")],

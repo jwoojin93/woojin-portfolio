@@ -1,6 +1,7 @@
 "use client";
 
 import { useFormStatus } from "react-dom";
+import LoadingSpinner from "./loading-spinner";
 
 interface ButtonProps {
   text: string;
@@ -12,9 +13,15 @@ export default function Button({ text }: ButtonProps) {
   return (
     <button
       disabled={pending}
-      className="primary-btn h-10 disabled:bg-neutral-400  disabled:text-neutral-300 disabled:cursor-not-allowed"
+      className="primary-btn disabled:bg-neutral-400  disabled:text-neutral-100 disabled:cursor-not-allowed flex items-center justify-center gap-2"
     >
-      {pending ? "로딩 중" : text}
+      {pending ? (
+        <>
+          Loading <LoadingSpinner className="w-4 h-4 fill-white" />
+        </>
+      ) : (
+        text
+      )}
     </button>
   );
 }
