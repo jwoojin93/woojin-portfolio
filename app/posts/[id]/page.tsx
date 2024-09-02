@@ -7,6 +7,7 @@ import Image from "next/image";
 import { notFound, redirect } from "next/navigation";
 import LikeButton from "@/components/like-button";
 import { IronSession } from "iron-session";
+import BackButton from "@/components/back-button";
 
 /**
  * post id 를 이용하여 post 를 가져옵니다.
@@ -171,54 +172,61 @@ export default async function PostDetail({
   };
 
   return (
-    <div className="p-5 relative min-h-[100dvh]">
-      {post.photo && (
-        <div className="relative aspect-video">
-          <Image
-            className="object-contain border-solid border-2 border-orange-800 rounded-lg"
-            fill
-            src={`${post.photo}/public`}
-            alt={post.title}
-          />
-        </div>
-      )}
-
-      <div className="flex justify-between mt-5">
-        <h2 className="text-lg font-semibold">{post.title}</h2>
-        <div className="flex items-center gap-2 text-neutral-400 text-sm">
-          <EyeIcon className="size-5" />
-          <span>조회 {post.views}</span>
-        </div>
+    <>
+      <div>
+        <BackButton />
       </div>
+      <div className="p-5 relative min-h-[100dvh]">
+        {post.photo && (
+          <div className="relative aspect-video">
+            <Image
+              className="object-contain border-solid border-2 border-orange-800 rounded-lg"
+              fill
+              src={`${post.photo}/public`}
+              alt={post.title}
+            />
+          </div>
+        )}
 
-      <p className="mb-5">{post.description}</p>
-
-      <div className="flex justify-between items-center">
-        <div className="flex items-center gap-5">
-          <Image
-            width={40}
-            height={40}
-            className="size-10 rounded-full"
-            src={post.user.avatar ? post.user.avatar : "/placeholder.jpg"}
-            alt={post.user.username}
-          />
-          <div>
-            <span className="text-sm font-semibold">{post.user.username}</span>
-            <div className="text-xs">
-              <span>{formatToTimeAgo(post.created_at.toString())}</span>
-            </div>
+        <div className="flex justify-between mt-5">
+          <h2 className="text-lg font-semibold">{post.title}</h2>
+          <div className="flex items-center gap-2 text-neutral-400 text-sm">
+            <EyeIcon className="size-5" />
+            <span>조회 {post.views}</span>
           </div>
         </div>
-        <div className="min-w-[150px]">
-          <LikeButton isLiked={isLiked} likeCount={likeCount} postId={id} />
-        </div>
-      </div>
 
-      <form action={isOwner ? deletePost : createChatRoom}>
-        <button className="primary-btn mt-16">
-          {isOwner ? "삭제하기" : "채팅하기"}
-        </button>
-      </form>
-    </div>
+        <p className="mb-5">{post.description}</p>
+
+        <div className="flex justify-between items-center">
+          <div className="flex items-center gap-5">
+            <Image
+              width={40}
+              height={40}
+              className="size-10 rounded-full"
+              src={post.user.avatar ? post.user.avatar : "/placeholder.jpg"}
+              alt={post.user.username}
+            />
+            <div>
+              <span className="text-sm font-semibold">
+                {post.user.username}
+              </span>
+              <div className="text-xs">
+                <span>{formatToTimeAgo(post.created_at.toString())}</span>
+              </div>
+            </div>
+          </div>
+          <div className="min-w-[150px]">
+            <LikeButton isLiked={isLiked} likeCount={likeCount} postId={id} />
+          </div>
+        </div>
+
+        <form action={isOwner ? deletePost : createChatRoom}>
+          <button className="primary-btn mt-16">
+            {isOwner ? "삭제하기" : "채팅하기"}
+          </button>
+        </form>
+      </div>
+    </>
   );
 }
