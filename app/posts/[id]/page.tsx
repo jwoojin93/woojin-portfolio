@@ -190,17 +190,15 @@ export default async function PostDetail({
           </div>
         )}
 
-        <div className="flex justify-between mt-5">
-          <h2 className="text-lg font-semibold">{post.title}</h2>
-          <div className="flex items-center gap-2 text-neutral-400 text-sm">
-            <EyeIcon className="size-5" />
-            <span>조회 {post.views}</span>
-          </div>
-        </div>
+        <h2 className="ext-lg font-semibold break-all whitespace-normal">
+          {post.title}
+        </h2>
 
-        <p className="mb-5">{post.description}</p>
+        <p className="mt-5 mb-5 break-all whitespace-normal">
+          {post.description}
+        </p>
 
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center gap-2 text-neutral-400 text-sm mb-5">
           <div className="flex items-center gap-5">
             <Image
               width={40}
@@ -218,16 +216,26 @@ export default async function PostDetail({
               </div>
             </div>
           </div>
-          <div className="min-w-[150px]">
-            <LikeButton isLiked={isLiked} likeCount={likeCount} postId={id} />
+          <div className="flex items-center gap-1">
+            <EyeIcon className="size-5" />
+            <span>조회 {post.views}</span>
           </div>
         </div>
 
-        <form action={isOwner ? deletePost : createChatRoom}>
-          <button className="primary-btn mt-16">
-            {isOwner ? "삭제하기" : "채팅하기"}
-          </button>
-        </form>
+        <LikeButton isLiked={isLiked} likeCount={likeCount} postId={id} />
+
+        {isOwner ? (
+          <div className="flex mt-10 gap-3">
+            <button className="primary-btn w-auto flex-1">EDIT</button>
+            <form action={deletePost} className="w-auto flex-1">
+              <button className="primary-btn">DELETE</button>
+            </form>
+          </div>
+        ) : (
+          <form action={createChatRoom}>
+            <button className="primary-btn mt-16">채팅하기</button>
+          </form>
+        )}
       </div>
     </>
   );

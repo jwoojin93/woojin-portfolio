@@ -15,6 +15,9 @@ import {
   isDesktop,
   isMobile,
 } from "react-device-detect";
+import Textarea from "@/components/textarea";
+import Header from "@/components/header";
+import BackButton from "@/components/back-button";
 
 export default function AddPost() {
   const [preview, setPreview] = useState("");
@@ -105,59 +108,63 @@ export default function AddPost() {
   };
 
   return (
-    <div>
-      <form action={onValid} className="p-5 flex flex-col gap-5">
-        {/* 현재 접속한 기기를 확인하고 pc 일 경우에만 사진 업로드 기능을 구현하기 */}
+    <>
+      <Header>
+        <BackButton />
+      </Header>
+      <div>
+        <form action={onValid} className="p-5 flex flex-col gap-5">
+          {/* 현재 접속한 기기를 확인하고 pc 일 경우에만 사진 업로드 기능을 구현하기 */}
 
-        <BrowserView>
-          <label
-            htmlFor="photo"
-            className="border-2 aspect-square flex items-center justify-center flex-col text-neutral-300 border-neutral-300 rounded-md border-dashed cursor-pointer bg-center bg-cover"
-            style={{ backgroundImage: `url(${preview})` }}
-          >
-            {preview === "" ? (
-              <>
-                <PhotoIcon className="w-20" />
-                <div className="text-neutral-400 text-sm">
-                  사진을 추가해주세요.
-                  {errors.photo?.message}
-                </div>
-              </>
-            ) : null}
-          </label>
-          <input
-            onChange={onImageChange}
-            type="file"
-            id="photo"
-            name="photo"
-            accept="image/*"
-            className="hidden"
+          <BrowserView>
+            <label
+              htmlFor="photo"
+              className="border-2 aspect-square flex items-center justify-center flex-col text-neutral-300 border-neutral-300 rounded-md border-dashed cursor-pointer bg-center bg-cover"
+              style={{ backgroundImage: `url(${preview})` }}
+            >
+              {preview === "" ? (
+                <>
+                  <PhotoIcon className="w-20" />
+                  <div className="text-neutral-400 text-sm">
+                    사진을 추가해주세요.
+                    {errors.photo?.message}
+                  </div>
+                </>
+              ) : null}
+            </label>
+            <input
+              onChange={onImageChange}
+              type="file"
+              id="photo"
+              name="photo"
+              accept="image/*"
+              className="hidden"
+            />
+          </BrowserView>
+          <MobileView>
+            <p className="text-center text-neutral-600 leading-7 break-keep">
+              사진 업로드 기능은 현재는 PC 에서만 사용 가능합니다
+              <br />
+              모바일에서 작성 후 PC 에서 수정하여 사진을 업로드 해주세요 🥹
+            </p>
+          </MobileView>
+
+          <Input
+            required
+            placeholder="제목"
+            type="text"
+            {...register("title")}
+            errors={[errors.title?.message ?? ""]}
           />
-        </BrowserView>
-        <MobileView>
-          <p className="text-center text-neutral-600 leading-7 break-keep">
-            사진 업로드 기능은 현재는 PC 에서만 사용 가능합니다
-            <br />
-            모바일에서 작성 후 PC 에서 수정하여 사진을 업로드 해주세요 🥹
-          </p>
-        </MobileView>
-
-        <Input
-          required
-          placeholder="제목"
-          type="text"
-          {...register("title")}
-          errors={[errors.title?.message ?? ""]}
-        />
-        <Input
-          type="text"
-          required
-          placeholder="자세한 설명"
-          {...register("description")}
-          errors={[errors.description?.message ?? ""]}
-        />
-        <Button text="작성 완료" />
-      </form>
-    </div>
+          <Textarea
+            required
+            placeholder="자세한 설명"
+            {...register("description")}
+            errors={[errors.description?.message ?? ""]}
+          />
+          <Button text="작성 완료" />
+        </form>
+      </div>
+    </>
   );
 }
