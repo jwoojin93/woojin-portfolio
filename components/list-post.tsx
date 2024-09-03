@@ -46,19 +46,18 @@ export default function ListPost({
           <span className="text-sm text-neutral-500">
             {formatToTimeAgo(created_at.toString())}
           </span>
+          <div className="flex gap-4 items-center justify-end *:flex *:gap-1 *:items-center ">
+            <span>조회 {views}</span>
+            <span>
+              <HandThumbUpIcon className="size-4" />
+              {_count.likes}
+            </span>
+            <span>
+              <ChatBubbleBottomCenterIcon className="size-4" />
+              {_count.comments}
+            </span>
+          </div>
         </div>
-      </div>
-
-      <div className="flex gap-4 items-center justify-end *:flex *:gap-1 *:items-center">
-        <span>조회 {views}</span>
-        <span>
-          <HandThumbUpIcon className="size-4" />
-          {_count.likes}
-        </span>
-        <span>
-          <ChatBubbleBottomCenterIcon className="size-4" />
-          {_count.comments}
-        </span>
       </div>
     </Link>
   );

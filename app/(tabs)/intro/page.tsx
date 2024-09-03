@@ -15,7 +15,7 @@ export default async function IntroPage() {
       </div>
 
       <p className="text-center">
-        안녕하세요, 화면으로 유저와 소통하는 프론트 개발자 정우진 입니다.
+        안녕하세요, 화면으로 유저와 소통하는 프론트엔드 개발자 정우진 입니다.
       </p>
 
       {/* 비행기 3d */}
@@ -24,7 +24,7 @@ export default async function IntroPage() {
       </div>
 
       <p className="text-center">
-        저는 2012년 부터 2017년까지 공군부사관으로 했어요
+        저는 2012년 부터 2017년까지 공군부사관으로 근무했어요
       </p>
       <p className="text-gray-600 text-sm text-center">
         비행기를 몰진 않았습니다..🫥

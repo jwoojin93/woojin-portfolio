@@ -174,13 +174,13 @@ export default async function PostDetail({
 
   return (
     <>
-      <div></div>
       <Header>
         <BackButton />
       </Header>
-      <div className="p-5 relative min-h-[100dvh]">
+
+      <div className="p-5 min-h-[100dvh]">
         {post.photo && (
-          <div className="relative aspect-video">
+          <div className="aspect-video">
             <Image
               className="object-contain border-solid border-2 border-orange-800 rounded-lg"
               fill

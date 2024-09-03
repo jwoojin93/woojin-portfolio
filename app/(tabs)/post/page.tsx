@@ -30,8 +30,8 @@ export const metadata = { title: "동네생활" };
 export default async function Post() {
   const posts = await getPosts();
   return (
-    <div className="p-5 flex flex-col pb-36">
-      <Title value="Post" />
+    <div className="flex flex-col">
+      <Title value="Post" className="pb-8" />
       {posts.length > 0 ? (
         <>
           {posts.map((post) => (
