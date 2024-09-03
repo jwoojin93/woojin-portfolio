@@ -5,12 +5,16 @@ import { createPortal } from "react-dom";
 
 export default function Header({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState<boolean>(false);
+  const [element, setElement] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
+    setElement(document.getElementById("header-portal"));
     setMounted(true);
-    return () => setMounted(false);
+    return () => {
+      setElement(null);
+      setMounted(false);
+    };
   }, []);
 
-  const element = document.getElementById("header-portal");
   return mounted ? createPortal(children, element as HTMLElement) : <></>;
 }
