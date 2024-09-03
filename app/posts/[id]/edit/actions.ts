@@ -6,6 +6,29 @@ import { redirect } from "next/navigation";
 import { postSchema } from "./schema";
 
 /**
+ * post id 를 이용하여 post 를 가져옵니다.
+ * @param id
+ * @returns post
+ */
+export async function getPost(id: number) {
+  try {
+    const post = await db.post.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        userId: true,
+        title: true,
+        description: true,
+        photo: true,
+      },
+    });
+    return post;
+  } catch (e) {
+    return null;
+  }
+}
+
+/**
  * 제품 업로드 이벤트
  * @param formData
  * @returns
@@ -13,6 +36,7 @@ import { postSchema } from "./schema";
 export async function uploadPost(formData: FormData) {
   console.log("uploadPost");
   console.log("formData: ", formData);
+
   // photo, title, price, description 정보를 담은 data 를 만든다.
   const data = {
     photo: formData.get("photo"),

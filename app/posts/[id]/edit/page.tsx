@@ -3,8 +3,8 @@
 import Button from "@/components/button";
 import Input from "@/components/input";
 import { PhotoIcon } from "@heroicons/react/24/solid";
-import { useState } from "react";
-import { getUploadUrl, uploadPost } from "./actions";
+import { useEffect, useState } from "react";
+import { getPost, getUploadUrl, uploadPost } from "./actions";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PostType, postSchema } from "./schema";
@@ -12,11 +12,20 @@ import { BrowserView, MobileView } from "react-device-detect";
 import Textarea from "@/components/textarea";
 import Header from "@/components/header";
 import BackButton from "@/components/back-button";
+import { useParams } from "next/navigation";
 
 export default function EditPost() {
+  interface IPost {
+    id: number;
+    userId: number;
+    title: String;
+    description: String | null;
+    photo: String | null;
+  }
   const [preview, setPreview] = useState("");
   const [uploadUrl, setUploadUrl] = useState("");
   const [file, setFile] = useState<File | null>(null);
+  const [post, setPost] = useState<IPost | null>(null);
 
   const {
     register,
@@ -26,6 +35,24 @@ export default function EditPost() {
   } = useForm<PostType>({
     resolver: zodResolver(postSchema),
   });
+
+  const params = useParams();
+
+  useEffect(() => {
+    console.log("params: ", params);
+    async function runEffect(id: string) {
+      const post = await getPost(parseInt(id));
+      setPost(post);
+    }
+
+    if (typeof params.id === "string") {
+      runEffect(params.id);
+    }
+  }, [params.id]);
+
+  useEffect(() => {
+    console.log("post: ", post);
+  }, [post]);
 
   /**
    * 게시물 이미지 이벤트
