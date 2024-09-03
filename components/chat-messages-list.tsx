@@ -1,7 +1,7 @@
 "use client";
 
-import { InitialChatMessages } from "@/app/chats/[id]/page";
-import { saveMessage } from "@/app/chats/actions";
+import { InitialChatMessages } from "@/app/(normal)/chats/[id]/page";
+import { saveMessage } from "@/app/(normal)/chats/actions";
 import { formatToTimeAgo } from "@/lib/utils";
 import { ArrowUpCircleIcon } from "@heroicons/react/24/solid";
 import { RealtimeChannel, createClient } from "@supabase/supabase-js";

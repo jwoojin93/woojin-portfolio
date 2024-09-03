@@ -8,6 +8,7 @@ import { notFound, redirect } from "next/navigation";
 import LikeButton from "@/components/like-button";
 import { IronSession } from "iron-session";
 import BackButton from "@/components/back-button";
+import Header from "@/components/header";
 
 /**
  * post id 를 이용하여 post 를 가져옵니다.
@@ -173,9 +174,10 @@ export default async function PostDetail({
 
   return (
     <>
-      <div>
+      <div></div>
+      <Header>
         <BackButton />
-      </div>
+      </Header>
       <div className="p-5 relative min-h-[100dvh]">
         {post.photo && (
           <div className="relative aspect-video">
