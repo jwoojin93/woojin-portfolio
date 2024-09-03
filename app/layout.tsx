@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Roboto, Rubik_Scribble } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
-import ArrowButton from "@/components/arrow-button";
 
 /**
  * roboto font 를 구글에서 가져옵니다.
@@ -69,7 +68,6 @@ export default function RootLayout({
         <header id="header-portal" />
         <main className="w-full h-full flex justify-center">
           <div className="max-w-[800px] w-full h-full p-5">{children}</div>
-          <ArrowButton />
         </main>
       </body>
     </html>

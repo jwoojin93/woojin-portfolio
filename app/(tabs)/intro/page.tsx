@@ -1,3 +1,4 @@
+import ArrowButton from "@/components/arrow-button";
 import ThreeCanvas from "@/components/three/ThreeCanvas";
 import Title from "@/components/title";
 
@@ -39,6 +40,7 @@ export default async function IntroPage() {
         </a>
         를 눌러주세요.
       </p>
+      <ArrowButton />
     </div>
   );
 }

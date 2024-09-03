@@ -1,3 +1,4 @@
+import ArrowButton from "@/components/arrow-button";
 import ListPost from "@/components/list-post";
 import Title from "@/components/title";
 import db from "@/lib/db";
@@ -32,7 +33,12 @@ export default async function Post() {
     <div className="p-5 flex flex-col pb-36">
       <Title value="Post" />
       {posts.length > 0 ? (
-        posts.map((post) => <ListPost key={post.id} {...post} />)
+        <>
+          {posts.map((post) => (
+            <ListPost key={post.id} {...post} />
+          ))}
+          <ArrowButton />
+        </>
       ) : (
         <div className="min-h-[100px] flex justify-center items-center flex-col">
           <span>게시글이 없습니다.</span>

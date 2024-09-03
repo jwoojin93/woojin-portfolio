@@ -1,3 +1,4 @@
+import ArrowButton from "@/components/arrow-button";
 import Title from "@/components/title";
 
 export const metadata = { title: "Readme: Web Page Description" };
@@ -63,6 +64,7 @@ export default async function ReadmePage() {
       <p className="text-gray-600 text-sm text-center mt-3">
         생성한지 얼마되지 않아서 아직 다듬어야 할 부분이 많습니다 ..🫥
       </p>
+      <ArrowButton />
     </div>
   );
 }

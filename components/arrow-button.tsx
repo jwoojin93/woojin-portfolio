@@ -23,7 +23,7 @@ export default function ArrowButton() {
 
   const checkScroll = () => {
     const last =
-      Math.ceil(window.scrollY) + window.innerHeight ===
+      Math.ceil(window.scrollY) + window.innerHeight >=
       document.body.scrollHeight;
     setIsLast(last);
   };
