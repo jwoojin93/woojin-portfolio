@@ -178,11 +178,11 @@ export default async function PostDetail({
         <BackButton />
       </Header>
 
-      <div className="p-5 min-h-[100dvh]">
+      <div>
         {post.photo && (
-          <div className="aspect-video">
+          <div className="aspect-video relative">
             <Image
-              className="object-contain border-solid border-2 border-orange-800 rounded-lg"
+              className="object-contain shadow-sm rounded-lg w-full h-full"
               fill
               src={`${post.photo}/public`}
               alt={post.title}

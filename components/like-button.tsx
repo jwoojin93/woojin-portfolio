@@ -38,8 +38,10 @@ export default function LikeButton({
   return (
     <button
       onClick={onClick}
-      className={`flex w-full justify-center items-center gap-2 text-neutral-400 text-sm border border-neutral-400 rounded-full p-2  transition-colors ${
-        state.isLiked ? "primary-btn" : "hover:bg-neutral-800"
+      className={`flex w-full justify-center items-center gap-2 text-sm border rounded-full p-2 transition-colors bg-transparent ${
+        state.isLiked
+          ? "text-orange-700 border-orange-700"
+          : "text-neutral-700 border-neutral-700"
       }`}
     >
       {state.isLiked ? (
@@ -47,11 +49,7 @@ export default function LikeButton({
       ) : (
         <OutlineHandThumbUpIcon className="size-5" />
       )}
-      {state.isLiked ? (
-        <span> {state.likeCount}</span>
-      ) : (
-        <span>공감하기 ({state.likeCount})</span>
-      )}
+      <span> {state.likeCount}</span>
     </button>
   );
 }
