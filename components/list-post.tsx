@@ -6,6 +6,7 @@ import {
   HandThumbUpIcon,
   EyeIcon,
 } from "@heroicons/react/24/outline";
+import { Text } from "@chakra-ui/react";
 
 interface ListPostProps {
   title: string;
@@ -35,21 +36,31 @@ export default function ListPost({
       className=" mb-5 shadow-md rounded-md p-5 bg-white text-neutral-400 flex flex-col gap-2 last:pb-0 last:border-b-0"
     >
       <div className="flex gap-4">
-        <div className="relative size-28 rounded-md overflow-hidden">
+        <div className="relative min-w-28 min-h-28 rounded-md overflow-hidden">
           <Image
-            width={112}
-            height={112}
+            fill
             src={photo ? `${photo}/avatar` : `/placeholder.jpg`}
             className="object-cover"
             alt={title}
           />
         </div>
-        <div className="flex flex-col gap-1 *:text-black">
-          <h3 className="text-lg text-orange-900 font-semibold">{title}</h3>
+        <div className="flex-1 flex flex-col gap-1 *:text-black">
+          <Text
+            as="h3"
+            className="text-lg text-orange-900 font-semibold max-w-[150px] sm:max-w-[400px] md:max-w-[500px]"
+            noOfLines={1}
+          >
+            {title}
+          </Text>
           {description && (
-            <h3 className="text-sm text-orange-900 flex-1">{description}</h3>
+            <Text
+              className="text-sm text-orange-900 max-w-[150px] sm:max-w-[400px] md:max-w-[500px]"
+              noOfLines={1}
+            >
+              {description}
+            </Text>
           )}
-
+          <div className="flex-1"></div>
           <div className=" flex gap-4 justify-end items-center *:flex *:gap-1 *:items-center *:text-sm">
             <span>
               <HandThumbUpIcon className="size-4" />
