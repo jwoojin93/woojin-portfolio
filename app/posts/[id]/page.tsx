@@ -9,6 +9,7 @@ import LikeButton from "@/components/like-button";
 import { IronSession } from "iron-session";
 import BackButton from "@/components/back-button";
 import Header from "@/components/header";
+import Link from "next/link";
 
 /**
  * post id 를 이용하여 post 를 가져옵니다.
@@ -226,7 +227,9 @@ export default async function PostDetail({
 
         {isOwner ? (
           <div className="flex mt-10 gap-3">
-            <button className="primary-btn w-auto flex-1">EDIT</button>
+            <Link href={`/posts/${post.id}/edit`} className="w-auto flex-1">
+              <button className="primary-btn">EDIT</button>
+            </Link>
             <form action={deletePost} className="w-auto flex-1">
               <button className="primary-btn">DELETE</button>
             </form>
