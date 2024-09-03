@@ -31,7 +31,7 @@ export default async function MyPage() {
   return (
     <div>
       <Title value="My Profile" />
-      <Suspense fallback={"Welcome!"}>
+      <Suspense fallback={<h1 className="mb-5 mt-5">Welcome!</h1>}>
         <Username />
       </Suspense>
       <form action={logOut}>
