@@ -12,9 +12,7 @@ import { revalidateTag } from "next/cache";
 export async function getLikeStatus(postId: number) {
   const session = await getSession(); // 세션 가져오기
 
-  /**
-   * post id 와 user id 를 사용하여 like 여부를 조회합니다.
-   */
+  // post id 와 user id 를 사용하여 like 여부를 조회합니다.
   const isLiked = await db.like.findUnique({
     where: {
       id: {
@@ -24,9 +22,7 @@ export async function getLikeStatus(postId: number) {
     },
   });
 
-  /**
-   * like database 의 수를 조회합니다.
-   */
+  // like database 의 수를 조회합니다.
   const likeCount = await db.like.count({
     where: { postId },
   });
