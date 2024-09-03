@@ -5,7 +5,7 @@ export const metadata = { title: "Readme: Web Page Description" };
 
 export default async function ReadmePage() {
   return (
-    <div className="pb-28  [&_b]:bg-pink-100 [&_b]:px-1 [&_b]:rounded-md [&_b]:font-normal">
+    <div className="[&_b]:bg-pink-100 [&_b]:px-1 [&_b]:rounded-md [&_b]:font-normal">
       <Title value="Project Description" />
       <p className="text-center mt-10">
         이 웹페이지는 <b>next.js 14 App Route</b> 방식으로 제작되었으며

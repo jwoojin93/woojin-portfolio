@@ -6,7 +6,7 @@ export const metadata = { title: "Who am I?" };
 
 export default async function IntroPage() {
   return (
-    <div className="pb-28">
+    <>
       <Title value="Who Am I" />
 
       {/* 노트북, 데스크탑 화면 3d */}
@@ -41,6 +41,6 @@ export default async function IntroPage() {
         를 눌러주세요.
       </p>
       <ArrowButton />
-    </div>
+    </>
   );
 }
