@@ -22,16 +22,9 @@ export default function ArrowButton() {
   }, [pathname]);
 
   const checkScroll = () => {
-    console.log("Math.ceil(window.scrollY): ", Math.ceil(window.scrollY));
-    console.log("window.innerHeight: ", window.innerHeight);
-    console.log(
-      "Math.ceil(window.scrollY) + window.innerHeight: ",
-      Math.ceil(window.scrollY) + window.innerHeight
-    );
-    console.log("window.innerHeight: ", window.innerHeight);
     const last =
       Math.ceil(window.scrollY) + window.innerHeight ===
-      document.body.offsetHeight;
+      document.body.scrollHeight;
     setIsLast(last);
   };
 
