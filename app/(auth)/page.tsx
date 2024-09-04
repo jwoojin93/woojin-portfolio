@@ -14,7 +14,7 @@ export default function Intro() {
       </div>
       <div className="flex flex-col items-center gap-3 w-full">
         <p className=" text-center">emoji 를 클릭해보세요!👆</p>
-        <p className="mb-8">✔ JUST SUPRING IT ✔</p>
+        <p className="mb-8">✔ JUST SURFING IT ✔</p>
         <Link href="/create-account" className="primary-btn">
           시작하기
         </Link>
