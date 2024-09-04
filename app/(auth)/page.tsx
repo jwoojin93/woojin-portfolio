@@ -13,8 +13,10 @@ export default function Intro() {
         </Suspense>
       </div>
       <div className="flex flex-col items-center gap-3 w-full">
-        <p className=" text-center">emoji 를 클릭해보세요!👆</p>
-        <p className="mb-8">✔ JUST SURFING IT ✔</p>
+        <p className=" text-center">👆 emoji 를 클릭해보세요! 👆</p>
+        <p className="mb-8">
+          ✔ <span className="font-rubick font-bold">JUST SURFING IT</span> ✔
+        </p>
         <Link href="/create-account" className="primary-btn">
           시작하기
         </Link>
