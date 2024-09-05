@@ -13,19 +13,20 @@ import Textarea from "@/components/textarea";
 import Header from "@/components/header";
 import BackButton from "@/components/back-button";
 import { useParams } from "next/navigation";
+import ArrowButton from "@/components/arrow-button";
 
 export default function EditPost() {
   interface IPost {
     id: number;
     userId: number;
-    title: String;
-    description: String | null;
+    title: string;
+    description: string | null;
     photo: String | null;
   }
+
   const [preview, setPreview] = useState("");
   const [uploadUrl, setUploadUrl] = useState("");
   const [file, setFile] = useState<File | null>(null);
-  const [post, setPost] = useState<IPost | null>(null);
 
   const {
     register,
@@ -39,20 +40,22 @@ export default function EditPost() {
   const params = useParams();
 
   useEffect(() => {
-    console.log("params: ", params);
     async function runEffect(id: string) {
       const post = await getPost(parseInt(id));
-      setPost(post);
+      if (post) {
+        setValue("title", post.title);
+        if (post.description) setValue("description", post.description);
+        if (post.photo) {
+          setPreview(`${post.photo}/public`);
+          setValue("photo", post.photo);
+        }
+      }
     }
 
     if (typeof params.id === "string") {
       runEffect(params.id);
     }
-  }, [params.id]);
-
-  useEffect(() => {
-    console.log("post: ", post);
-  }, [post]);
+  }, [params]);
 
   /**
    * 게시물 이미지 이벤트
@@ -61,12 +64,9 @@ export default function EditPost() {
    * @returns
    */
   const onImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("onImageChange");
     const {
       target: { files },
     } = event;
-
-    console.log("files: ", files);
 
     // 파일이 없을 경우 종료한다.
     if (!files) return;
@@ -113,8 +113,13 @@ export default function EditPost() {
     const formData = new FormData();
     formData.append("title", data.title);
     formData.append("description", data.description);
+
+    console.log("data.photo: ", data.photo);
+    console.log("preview: ", preview);
+
     if (data.photo) formData.append("photo", data.photo);
     else formData.append("photo", "");
+
     const errors = await uploadPost(formData);
     console.log("errors: ", errors);
   });
@@ -125,12 +130,22 @@ export default function EditPost() {
     console.log("onValid 333");
   };
 
+  const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("e.target.value:", e.target.value);
+    setValue("title", e.target.value);
+  };
+
+  const onDescChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    console.log("e.target.value:", e.target.value);
+    setValue("description", e.target.value);
+  };
+
   return (
     <>
       <Header>
         <BackButton />
       </Header>
-      <div>
+      <div className="pt-10">
         <form action={onValid} className="p-5 flex flex-col gap-5">
           <BrowserView>
             <label
@@ -157,6 +172,7 @@ export default function EditPost() {
               className="hidden"
             />
           </BrowserView>
+
           <MobileView>
             <p className="text-center text-neutral-600 leading-7 break-keep">
               사진 업로드 기능은 현재는 PC 에서만 사용 가능합니다
@@ -168,17 +184,20 @@ export default function EditPost() {
             placeholder="제목"
             type="text"
             {...register("title")}
+            onChange={onTitleChange}
             errors={[errors.title?.message ?? ""]}
           />
           <Textarea
             required
             placeholder="자세한 설명"
             {...register("description")}
+            onChange={onDescChange}
             errors={[errors.description?.message ?? ""]}
           />
           <Button text="수정 완료" />
         </form>
       </div>
+      <ArrowButton bottom={5} />
     </>
   );
 }

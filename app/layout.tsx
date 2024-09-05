@@ -65,7 +65,7 @@ export default function RootLayout({
       <body
         className={`${roboto.variable} ${rubick.variable} ${metallica.variable} bg-neutral-100 text-black`}
       >
-        <header id="header-portal" />
+        <header className="fixed top-0 left-0" id="header-portal" />
         <main className="w-full h-full flex justify-center">
           <div className="max-w-[800px] w-full h-full p-5">{children}</div>
         </main>

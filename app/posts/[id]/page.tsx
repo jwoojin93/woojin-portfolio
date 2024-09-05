@@ -179,9 +179,9 @@ export default async function PostDetail({
         <BackButton />
       </Header>
 
-      <div>
+      <div className="mt-14">
         {post.photo && (
-          <div className="aspect-video relative">
+          <div className="aspect-video relative mb-7">
             <Image
               className="object-contain shadow-sm rounded-lg w-full h-full"
               fill
