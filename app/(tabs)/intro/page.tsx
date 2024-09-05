@@ -40,6 +40,11 @@ export default async function IntroPage() {
         </a>
         를 눌러주세요.
       </p>
+
+      <p className="mt-10 text-center">
+        저에게 궁금한 사항이 있으시다면 jwoojin93@gmail.com 으로 메일 주세요😁
+      </p>
+
       <ArrowButton />
     </>
   );
