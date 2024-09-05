@@ -20,9 +20,11 @@ interface ListPostProps {
     comments: number;
   };
   user: {
+    id: number;
     avatar: String | null;
     username: String;
   };
+  sessionId: number;
 }
 
 export default function ListPost({
@@ -34,11 +36,12 @@ export default function ListPost({
   views,
   _count,
   user,
+  sessionId,
 }: ListPostProps) {
   return (
     <Link
       href={`/posts/${id}`}
-      className=" mb-5 shadow-md rounded-md p-5 bg-white text-neutral-400 flex flex-col gap-2 last:pb-0 last:border-b-0"
+      className={`mb-5 shadow-md rounded-md p-5 bg-white text-neutral-400 flex flex-col gap-2 last:pb-0 last:border-b-0 `}
     >
       <div className="flex gap-4">
         <div className="relative min-w-28 min-h-28 rounded-md overflow-hidden">
@@ -68,9 +71,9 @@ export default function ListPost({
 
           <div className="flex-1"></div>
 
-          <div className=" flex gap-4 justify-between items-center *:flex *:gap-1 *:items-center *:text-sm flex-wrap">
-            <div className="flex-1 flex items-center gap-2">
-              <div className="relative size-10 rounded-md overflow-hidden">
+          <div className=" flex gap-2 justify-between items-center flex-wrap">
+            <div className="flex-1 flex items-center gap-2 justify-start">
+              <div className="relative size-5 sm:size-8 rounded-md overflow-hidden">
                 <Image
                   fill
                   src={user.avatar ? String(user.avatar) : `/placeholder.jpg`}
@@ -78,24 +81,28 @@ export default function ListPost({
                   alt={title}
                 />
               </div>
-              <p>{user.username}</p>
+              <p className={`${sessionId === user.id ? "bg-orange-200" : ""}`}>
+                {user.username}
+              </p>
             </div>
-
-            <span>
-              <HandThumbUpIcon className="size-4" />
-              {_count.likes}
-            </span>
-            <span>
-              <ChatBubbleBottomCenterIcon className="size-4" />
-              {_count.comments}
-            </span>
-            <span>
-              <EyeIcon className="size-4" />
-              {views}
-            </span>
-            <span className="text-sm text-neutral-500">
-              {formatToTimeAgo(created_at.toString())}
-            </span>
+            <div className="flex gap-4 flex-wrap  ">
+              <span className="flex gap-1 items-center text-sm">
+                <HandThumbUpIcon className="size-4" />
+                {_count.likes}
+              </span>
+              {/* 추후 댓글 기능 작업시 주석해제 */}
+              {/* <span className="flex gap-1 items-center text-sm">
+                <ChatBubbleBottomCenterIcon className="size-4" />
+                {_count.comments}
+              </span> */}
+              <span className="flex gap-1 items-center text-sm">
+                <EyeIcon className="size-4" />
+                {views}
+              </span>
+              <span className="text-sm text-neutral-500 hidden sm:block">
+                {formatToTimeAgo(created_at.toString())}
+              </span>
+            </div>
           </div>
         </div>
       </div>

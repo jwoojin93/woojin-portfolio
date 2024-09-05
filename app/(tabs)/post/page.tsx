@@ -2,29 +2,9 @@ import ArrowButton from "@/components/arrow-button";
 import ListPost from "@/components/list-post";
 import Title from "@/components/title";
 import db from "@/lib/db";
+import getSession from "@/lib/session";
 
 import Link from "next/link";
-
-// async function getPosts() {
-//   const posts = await db.post.findMany({
-//     select: {
-//       id: true,
-//       photo: true,
-//       title: true,
-//       description: true,
-//       views: true,
-//       created_at: true,
-//       userId: true,
-//       _count: {
-//         select: {
-//           comments: true,
-//           likes: true,
-//         },
-//       },
-//     },
-//   });
-//   return posts;
-// }
 
 async function getPosts() {
   const posts = await db.post.findMany({
@@ -35,7 +15,6 @@ async function getPosts() {
       description: true,
       views: true,
       created_at: true,
-      userId: true,
       _count: {
         select: {
           comments: true,
@@ -44,6 +23,7 @@ async function getPosts() {
       },
       user: {
         select: {
+          id: true,
           avatar: true,
           username: true,
         },
@@ -57,6 +37,8 @@ export const metadata = { title: "동네생활" };
 
 export default async function Post() {
   const posts = await getPosts();
+  const session = await getSession();
+  console.log("session: ", session);
   return (
     <div className="flex flex-col">
       <Title value="Viewing the property" className="pb-8" />
@@ -68,7 +50,7 @@ export default async function Post() {
       {posts.length > 0 ? (
         <>
           {posts.map((post) => (
-            <ListPost key={post.id} {...post} />
+            <ListPost key={post.id} sessionId={session.id!} {...post} />
           ))}
           <ArrowButton />
         </>
