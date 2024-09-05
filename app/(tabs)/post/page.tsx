@@ -5,6 +5,27 @@ import db from "@/lib/db";
 
 import Link from "next/link";
 
+// async function getPosts() {
+//   const posts = await db.post.findMany({
+//     select: {
+//       id: true,
+//       photo: true,
+//       title: true,
+//       description: true,
+//       views: true,
+//       created_at: true,
+//       userId: true,
+//       _count: {
+//         select: {
+//           comments: true,
+//           likes: true,
+//         },
+//       },
+//     },
+//   });
+//   return posts;
+// }
+
 async function getPosts() {
   const posts = await db.post.findMany({
     select: {
@@ -14,10 +35,17 @@ async function getPosts() {
       description: true,
       views: true,
       created_at: true,
+      userId: true,
       _count: {
         select: {
           comments: true,
           likes: true,
+        },
+      },
+      user: {
+        select: {
+          avatar: true,
+          username: true,
         },
       },
     },

@@ -34,9 +34,6 @@ export async function getPost(id: number) {
  * @returns
  */
 export async function updatePost(formData: FormData, postId: number) {
-  console.log("updatePost");
-  console.log("formData: ", formData);
-
   // photo, title, price, description 정보를 담은 data 를 만든다.
   const data = {
     photo: formData.get("photo"),

@@ -19,6 +19,10 @@ interface ListPostProps {
     likes: number;
     comments: number;
   };
+  user: {
+    avatar: String | null;
+    username: String;
+  };
 }
 
 export default function ListPost({
@@ -29,6 +33,7 @@ export default function ListPost({
   id,
   views,
   _count,
+  user,
 }: ListPostProps) {
   return (
     <Link
@@ -60,8 +65,22 @@ export default function ListPost({
               {description}
             </Text>
           )}
+
           <div className="flex-1"></div>
-          <div className=" flex gap-4 justify-end items-center *:flex *:gap-1 *:items-center *:text-sm">
+
+          <div className=" flex gap-4 justify-between items-center *:flex *:gap-1 *:items-center *:text-sm flex-wrap">
+            <div className="flex-1 flex items-center gap-2">
+              <div className="relative size-10 rounded-md overflow-hidden">
+                <Image
+                  fill
+                  src={user.avatar ? String(user.avatar) : `/placeholder.jpg`}
+                  className="object-cover rounded-full"
+                  alt={title}
+                />
+              </div>
+              <p>{user.username}</p>
+            </div>
+
             <span>
               <HandThumbUpIcon className="size-4" />
               {_count.likes}
