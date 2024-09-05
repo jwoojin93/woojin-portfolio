@@ -33,8 +33,8 @@ export async function getPost(id: number) {
  * @param formData
  * @returns
  */
-export async function uploadPost(formData: FormData) {
-  console.log("uploadPost");
+export async function updatePost(formData: FormData, postId: number) {
+  console.log("updatePost");
   console.log("formData: ", formData);
 
   // photo, title, price, description 정보를 담은 data 를 만든다.
@@ -57,7 +57,8 @@ export async function uploadPost(formData: FormData) {
     // 처리가 완료되면 생성된 post id 를 이용하여 post 상세페이지로 redirect 한다.
     const session = await getSession();
     if (session.id) {
-      const post = await db.post.create({
+      await db.post.update({
+        where: { id: postId },
         data: {
           title: result.data.title,
           description: result.data.description,
@@ -68,9 +69,8 @@ export async function uploadPost(formData: FormData) {
             },
           },
         },
-        select: { id: true },
       });
-      redirect(`/posts/${post.id}`);
+      redirect(`/post`);
     }
   }
 }

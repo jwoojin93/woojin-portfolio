@@ -4,7 +4,7 @@ import Button from "@/components/button";
 import Input from "@/components/input";
 import { PhotoIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
-import { getPost, getUploadUrl, uploadPost } from "./actions";
+import { getPost, getUploadUrl, updatePost } from "./actions";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PostType, postSchema } from "./schema";
@@ -114,29 +114,22 @@ export default function EditPost() {
     formData.append("title", data.title);
     formData.append("description", data.description);
 
-    console.log("data.photo: ", data.photo);
-    console.log("preview: ", preview);
-
     if (data.photo) formData.append("photo", data.photo);
     else formData.append("photo", "");
 
-    const errors = await uploadPost(formData);
+    const errors = await updatePost(formData, parseInt(String(params.id)));
     console.log("errors: ", errors);
   });
 
   const onValid = async () => {
-    console.log("onValid 123");
     await onSubmit();
-    console.log("onValid 333");
   };
 
   const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("e.target.value:", e.target.value);
     setValue("title", e.target.value);
   };
 
   const onDescChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    console.log("e.target.value:", e.target.value);
     setValue("description", e.target.value);
   };
 
