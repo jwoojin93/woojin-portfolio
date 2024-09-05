@@ -4,7 +4,7 @@ import { ArrowDownIcon } from "@heroicons/react/24/solid";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function ArrowButton({ bottom }: { bottom?: String | Number }) {
+export default function ArrowButton({ bottom }: { bottom?: String }) {
   const [isLast, setIsLast] = useState(false);
   const pathname = usePathname();
 
@@ -37,8 +37,7 @@ export default function ArrowButton({ bottom }: { bottom?: String | Number }) {
       onClick={toggleUpDown}
       className={`${
         isLast ? "opacity-0" : "opacity-100"
-      } transition-opacity ease-in-out fixed right-5 bottom-${
-        typeof bottom !== "undefined" ? bottom : "32"
+      } transition-opacity ease-in-out fixed right-5 ${bottom || "bottom-28"}
       } primary-btn w-16 h-16 rounded-full flex items-center justify-center [&>svg]:w-7 [&>svg]:h-7`}
     >
       <ArrowDownIcon />

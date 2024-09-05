@@ -3,7 +3,6 @@ import ListPost from "@/components/list-post";
 import Title from "@/components/title";
 import db from "@/lib/db";
 import getSession from "@/lib/session";
-
 import Link from "next/link";
 
 async function getPosts() {
@@ -33,12 +32,12 @@ async function getPosts() {
   return posts;
 }
 
-export const metadata = { title: "동네생활" };
+export const metadata = { title: "POST LIST" };
 
 export default async function Post() {
   const posts = await getPosts();
   const session = await getSession();
-  console.log("session: ", session);
+
   return (
     <div className="flex flex-col">
       <Title value="Viewing the property" className="pb-8" />

@@ -93,10 +93,6 @@ export default function EditPost() {
    * 제출하기 이벤트 처리
    */
   const onSubmit = handleSubmit(async (data: PostType) => {
-    console.log("onSumbmit");
-    console.log("data: ", data);
-    console.log("file: ", file);
-
     // 폼을 만들고 file을 추가한다.
     if (file) {
       const cloudflareForm = new FormData();
@@ -190,7 +186,7 @@ export default function EditPost() {
           <Button text="수정 완료" />
         </form>
       </div>
-      <ArrowButton bottom={5} />
+      <ArrowButton bottom={"bottom-5"} />
     </>
   );
 }
