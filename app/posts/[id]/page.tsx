@@ -161,7 +161,6 @@ export default async function PostDetail({
     });
 
     console.log("result 8: ", result);
-    // console.log("result 8: ", result[0].id);
 
     if (result.length > 0) {
       // 기존에 유저간에 생성된 채팅방이 있을 경우 해당 채팅방으로 이동합니다.
