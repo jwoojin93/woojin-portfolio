@@ -34,6 +34,8 @@ export async function getPost(id: number) {
  * @returns
  */
 export async function updatePost(formData: FormData, postId: number) {
+  console.log("updatePost");
+  console.log("formData: ", formData);
   // photo, title, price, description 정보를 담은 data 를 만든다.
   const data = {
     photo: formData.get("photo"),
@@ -48,12 +50,16 @@ export async function updatePost(formData: FormData, postId: number) {
 
   if (!result.success) {
     // 결과가 정상이 아닐경우 에러를 반환한다.
+    console.log("111");
     return result.error.flatten();
   } else {
+    console.log("222");
     // 결과가 정상일 경우 title, description, price, photo, user 가 들어있는 post database 를 생성한다.
     // 처리가 완료되면 생성된 post id 를 이용하여 post 상세페이지로 redirect 한다.
     const session = await getSession();
     if (session.id) {
+      console.log("333");
+      console.log("result: ", result);
       await db.post.update({
         where: { id: postId },
         data: {
