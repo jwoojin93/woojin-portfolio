@@ -127,7 +127,8 @@ export default async function PostDetail({
   if (isNaN(id)) return notFound();
 
   // post 가 없을 경우 not found 를 호출합니다.
-  const post = await getCachedPost(id);
+  // const post = await getCachedPost(id);
+  const post = await getPost(id);
   if (!post) return notFound();
 
   // 좋아요 수와, 좋아요 여부를 가져옵니다.
