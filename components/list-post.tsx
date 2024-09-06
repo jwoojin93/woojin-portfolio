@@ -7,6 +7,9 @@ import {
   EyeIcon,
 } from "@heroicons/react/24/outline";
 import { Text } from "@chakra-ui/react";
+import LikeButton from "./like-button";
+import { getLikeStatus } from "@/app/posts/[id]/actions";
+import getSession from "@/lib/session";
 
 interface ListPostProps {
   title: string;
@@ -24,10 +27,11 @@ interface ListPostProps {
     avatar: String | null;
     username: String;
   };
+
   sessionId: number;
 }
 
-export default function ListPost({
+export default async function ListPost({
   title,
   description,
   created_at,
@@ -38,6 +42,8 @@ export default function ListPost({
   user,
   sessionId,
 }: ListPostProps) {
+  const { likeCount, isLiked } = await getLikeStatus(id);
+
   return (
     <Link
       href={`/posts/${id}`}
@@ -85,16 +91,24 @@ export default function ListPost({
                 {user.username}
               </p>
             </div>
+
             <div className="flex gap-4 flex-wrap  ">
-              <span className="flex gap-1 items-center text-sm">
-                <HandThumbUpIcon className="size-4" />
-                {_count.likes}
-              </span>
-              {/* 추후 댓글 기능 작업시 주석해제 */}
+              {/* 좋아요 */}
+              <LikeButton
+                isLiked={isLiked}
+                likeCount={likeCount}
+                postId={id}
+                className="flex gap-1 items-center text-sm [&>svg]:size-4"
+                isPreventEvent={true}
+              />
+
+              {/* 댓글: 추후 댓글 기능 작업시 주석해제 */}
               {/* <span className="flex gap-1 items-center text-sm">
                 <ChatBubbleBottomCenterIcon className="size-4" />
                 {_count.comments}
               </span> */}
+
+              {/* 조회수 */}
               <span className="flex gap-1 items-center text-sm">
                 <EyeIcon className="size-4" />
                 {views}

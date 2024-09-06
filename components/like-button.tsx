@@ -9,12 +9,16 @@ interface LikeButtonProps {
   isLiked: boolean;
   likeCount: number;
   postId: number;
+  className?: string;
+  isPreventEvent?: boolean;
 }
 
 export default function LikeButton({
   isLiked,
   likeCount,
   postId,
+  className,
+  isPreventEvent,
 }: LikeButtonProps) {
   const [state, reducerFn] = useOptimistic(
     { isLiked, likeCount },
@@ -26,7 +30,8 @@ export default function LikeButton({
     })
   );
 
-  const onClick = async () => {
+  const onClick = async (e: React.MouseEvent) => {
+    if (isPreventEvent) e.preventDefault();
     reducerFn(undefined);
     if (isLiked) {
       await dislikePost(postId);
@@ -38,17 +43,14 @@ export default function LikeButton({
   return (
     <button
       onClick={onClick}
-      className={`flex w-full justify-center items-center gap-2 text-sm border rounded-full p-2 transition-colors bg-transparent ${
+      className={`${className} ${
         state.isLiked
           ? "text-orange-700 border-orange-700"
           : "text-neutral-700 border-neutral-700"
       }`}
     >
-      {state.isLiked ? (
-        <HandThumbUpIcon className="size-5" />
-      ) : (
-        <OutlineHandThumbUpIcon className="size-5" />
-      )}
+      {state.isLiked ? <HandThumbUpIcon /> : <OutlineHandThumbUpIcon />}
+      {/* <OutlineHandThumbUpIcon /> */}
       <span> {state.likeCount}</span>
     </button>
   );

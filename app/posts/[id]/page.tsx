@@ -49,7 +49,6 @@ async function getPost(id: number) {
  */
 const getCachedPost = nextCache(getPost, ["post-detail"], {
   tags: ["post-detail"],
-  revalidate: 60,
 });
 
 interface SessionContent {
@@ -223,7 +222,12 @@ export default async function PostDetail({
           </div>
         </div>
 
-        <LikeButton isLiked={isLiked} likeCount={likeCount} postId={id} />
+        <LikeButton
+          isLiked={isLiked}
+          likeCount={likeCount}
+          postId={id}
+          className="flex w-full justify-center items-center gap-2 text-sm border rounded-full p-2 transition-colors bg-transparent  [&>svg]:size-5"
+        />
 
         {isOwner ? (
           <div className="flex mt-10 gap-3">
