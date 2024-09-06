@@ -115,7 +115,8 @@ export default function ChatMessagesList({
   }, [chatRoomId]);
 
   return (
-    <div className="p-5 flex flex-col gap-5 min-h-screen justify-end">
+    // <div className="p-5 flex flex-col gap-5 min-h-screen justify-end">
+    <div className="p-5 flex flex-col gap-5 w-full h-[-webkit-fill-available] justify-end">
       {messages.map((message) => (
         <div
           key={message.id}
