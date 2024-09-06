@@ -35,6 +35,7 @@ export default function ChatMessagesList({
   const [messages, setMessages] = useState(initialMessages); // 그동안 주고받은 메시지
   const [message, setMessage] = useState(""); // 입력하는 메시지
   const channel = useRef<RealtimeChannel>(); // supabase 의 실시간 채널, supabase 가 맞나? cloudflare 인가?
+  const messageEndRef = useRef<HTMLDivElement | null>(null);
 
   /**
    * message 입력 이벤트 입니다.
@@ -114,6 +115,12 @@ export default function ChatMessagesList({
     };
   }, [chatRoomId]);
 
+  useEffect(() => {
+    if (messageEndRef.current) {
+      messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
+
   return (
     <div className="h-full pb-14">
       <div className="flex flex-col justify-start gap-5 w-full max-h-[-webkit-fill-available] overflow-y-scroll">
@@ -153,6 +160,8 @@ export default function ChatMessagesList({
             </div>
           </div>
         ))}
+
+        <div ref={messageEndRef}></div>
         <form
           className="fixed bottom-5 w-[calc(100%-40px)]"
           onSubmit={onSubmit}
