@@ -141,28 +141,19 @@ export default async function PostDetail({
 
   /**
    * 채팅방 만들기
-   * 1. 제품의 유저 아이디와, 현재 접속중인 유저 아이디를 조합하여 채팅방 id 를 만든다.
-   * 2. 채팅방이 만들어지면 해당 채팅방으로 이동한다.
    */
   const createChatRoom = async () => {
     "use server";
 
     const session = await getSession(); // 세션 가져오기
 
-    // 1. post userId 와 sesion user id 를 결합하여 만든 채팅방이 있는 지 먼저 확인해야 할 듯.
-    // 2. 어떻게 조합해서 chatRoom id 가 되는 지 먼저 알아야 할 듯.
-
+    // 유저간에 생성했던 채팅방이 있는 지 확인합니다.
     const result = await db.chatRoom.findMany({
       where: {
         AND: [
           { users: { some: { id: post.userId } } },
           { users: { some: { id: session.id } } },
         ],
-        // users: {
-        //   some: {
-        //     AND: [{ id: post.userId }, { id: session.id }],
-        //   },
-        // },
       },
       select: {
         id: true,
@@ -171,24 +162,22 @@ export default async function PostDetail({
 
     console.log("result 8: ", result);
     console.log("result 8: ", result[0].id);
-    // chatRoom 데이터베이스 컬럼이 생성되면 id 를 이용하여 채팅방으로 이동합니다.
-    // redirect(`/chats/${room.id}`);
 
-    if (result.length === 0) {
-      // post 의 user id 와 접속중인 user id 를 이용하여 chatRoom 데이터베이스 컬럼을 생성합니다.
-      // const room = await db.chatRoom.create({
-      //   data: {
-      //     users: {
-      //       connect: [{ id: post.userId }, { id: session.id }],
-      //     },
-      //   },
-      //   select: { id: true },
-      // });
-      // chatRoom 데이터베이스 컬럼이 생성되면 id 를 이용하여 채팅방으로 이동합니다.
-      // redirect(`/chats/${room.id}`);
-    } else {
-      // chatRoom 데이터베이스 컬럼이 생성되면 id 를 이용하여 채팅방으로 이동합니다.
+    if (result.length > 0) {
+      // 기존에 유저간에 생성된 채팅방이 있을 경우 해당 채팅방으로 이동합니다.
       redirect(`/chats/${result[0].id}`);
+    } else {
+      // post 의 user id 와 접속중인 user id 를 이용하여 chatRoom 데이터베이스 컬럼을 생성합니다.
+      const room = await db.chatRoom.create({
+        data: {
+          users: {
+            connect: [{ id: post.userId }, { id: session.id }],
+          },
+        },
+        select: { id: true },
+      });
+      // chatRoom 데이터베이스 컬럼이 생성되면 id 를 이용하여 채팅방으로 이동합니다.
+      redirect(`/chats/${room.id}`);
     }
   };
 

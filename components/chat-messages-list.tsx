@@ -21,7 +21,7 @@ interface ChatMessageListProps {
   userId: number;
   chatRoomId: string;
   username: string;
-  avatar: string;
+  avatar: string | null;
 }
 
 // 채팅메시지 리스트 컴포넌트 입니다.
@@ -67,7 +67,7 @@ export default function ChatMessagesList({
         userId,
         user: {
           username: "string",
-          avatar: "xxx",
+          avatar: null,
         },
       },
     ]);
@@ -125,7 +125,9 @@ export default function ChatMessagesList({
         >
           {message.userId === userId ? null : (
             <Image
-              src={message.user.avatar!}
+              src={
+                message.user.avatar ? message.user.avatar : "/placeholder.jpg"
+              }
               alt={message.user.username}
               width={50}
               height={50}
