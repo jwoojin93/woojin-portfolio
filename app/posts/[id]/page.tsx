@@ -10,6 +10,8 @@ import { IronSession } from "iron-session";
 import BackButton from "@/components/back-button";
 import Header from "@/components/header";
 import Link from "next/link";
+import Textarea from "@/components/textarea";
+import ArrowButton from "@/components/arrow-button";
 
 /**
  * post id 를 이용하여 post 를 가져옵니다.
@@ -195,9 +197,9 @@ export default async function PostDetail({
           {post.title}
         </h2>
 
-        <p className="mt-5 mb-5 break-all whitespace-normal">
+        <Textarea name="description" readOnly className="p-0 text-sm mt-3">
           {post.description}
-        </p>
+        </Textarea>
 
         <div className="flex justify-between items-center gap-2 text-neutral-400 text-sm mb-5">
           <div className="flex items-center gap-5">
@@ -245,6 +247,7 @@ export default async function PostDetail({
           </form>
         )}
       </div>
+      <ArrowButton bottom={"bottom-5"} />
     </>
   );
 }
