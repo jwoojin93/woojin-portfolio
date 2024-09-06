@@ -141,9 +141,9 @@ export default function ChatMessagesList({
             }`}
           >
             <span
-              className={`${
-                message.userId === userId ? "bg-neutral-500" : "bg-orange-500"
-              } p-2.5 rounded-md`}
+              className={`text-neutral-100 ${
+                message.userId === userId ? "bg-orange-500" : "bg-neutral-500"
+              } p-2.5 rounded-xl`}
             >
               {message.payload}
             </span>
