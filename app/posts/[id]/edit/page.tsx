@@ -68,6 +68,8 @@ export default function EditPost() {
       target: { files },
     } = event;
 
+    console.log("files 33: ", files);
+
     // 파일이 없을 경우 종료한다.
     if (!files) return;
 
@@ -79,6 +81,10 @@ export default function EditPost() {
 
     // upload url 과 value 를 상태에 저장한다.
     const { success, result } = await getUploadUrl();
+
+    console.log("success 33: ", success);
+    console.log("result 33: ", result);
+
     if (success) {
       const { id, uploadURL } = result;
       setUploadUrl(uploadURL);
@@ -93,6 +99,7 @@ export default function EditPost() {
    * 제출하기 이벤트 처리
    */
   const onSubmit = handleSubmit(async (data: PostType) => {
+    console.log("file: ", file);
     // 폼을 만들고 file을 추가한다.
     if (file) {
       const cloudflareForm = new FormData();
