@@ -110,6 +110,9 @@ export default function EditPost() {
     formData.append("title", data.title);
     formData.append("description", data.description);
 
+    console.log("formData 33: ", formData);
+    console.log("data 33: ", data);
+
     if (data.photo) formData.append("photo", data.photo);
     else formData.append("photo", "");
 
