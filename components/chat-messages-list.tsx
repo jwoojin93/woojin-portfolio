@@ -115,58 +115,62 @@ export default function ChatMessagesList({
   }, [chatRoomId]);
 
   return (
-    // <div className="p-5 flex flex-col gap-5 min-h-screen justify-end">
-    <div className="p-5 flex flex-col gap-5 w-full h-[-webkit-fill-available] justify-end">
-      {messages.map((message) => (
-        <div
-          key={message.id}
-          className={`flex gap-2 items-start ${
-            message.userId === userId ? "justify-end" : ""
-          }`}
-        >
-          {message.userId === userId ? null : (
-            <Image
-              src={
-                message.user.avatar ? message.user.avatar : "/placeholder.jpg"
-              }
-              alt={message.user.username}
-              width={50}
-              height={50}
-              className="size-8 rounded-full"
-            />
-          )}
+    <div className="h-full pb-14">
+      <div className="flex flex-col justify-start gap-5 w-full max-h-[-webkit-fill-available] overflow-y-scroll">
+        {messages.map((message) => (
           <div
-            className={`flex flex-col gap-1 ${
-              message.userId === userId ? "items-end" : ""
+            key={message.id}
+            className={`flex gap-2 items-start ${
+              message.userId === userId ? "justify-end" : ""
             }`}
           >
-            <span
-              className={`text-neutral-100 ${
-                message.userId === userId ? "bg-orange-500" : "bg-neutral-500"
-              } p-2.5 rounded-xl`}
+            {message.userId === userId ? null : (
+              <Image
+                src={
+                  message.user.avatar ? message.user.avatar : "/placeholder.jpg"
+                }
+                alt={message.user.username}
+                width={50}
+                height={50}
+                className="size-8 rounded-full"
+              />
+            )}
+            <div
+              className={`flex flex-col gap-1 ${
+                message.userId === userId ? "items-end" : ""
+              }`}
             >
-              {message.payload}
-            </span>
-            <span className="text-xs">
-              {formatToTimeAgo(message.created_at.toString())}
-            </span>
+              <span
+                className={`text-neutral-100 ${
+                  message.userId === userId ? "bg-orange-500" : "bg-neutral-500"
+                } p-2.5 rounded-xl`}
+              >
+                {message.payload}
+              </span>
+              <span className="text-xs">
+                {formatToTimeAgo(message.created_at.toString())}
+              </span>
+            </div>
           </div>
-        </div>
-      ))}
-      <form className="flex relative" onSubmit={onSubmit}>
-        <input
-          required
-          onChange={onChange}
-          value={message}
-          className="bg-transparent rounded-full w-full h-10 focus:outline-none px-5 ring-2 focus:ring-4 transition ring-neutral-200 focus:ring-neutral-50 border-none placeholder:text-neutral-400"
-          type="text"
-          name="message"
-          placeholder="Write a message..."
-        />
-        <button className="absolute right-0">
-          <ArrowUpCircleIcon className="size-10 text-orange-500 transition-colors hover:text-orange-300" />
-        </button>
-      </form>
+        ))}
+        <form
+          className="fixed bottom-5 w-[calc(100%-40px)]"
+          onSubmit={onSubmit}
+        >
+          <input
+            required
+            onChange={onChange}
+            value={message}
+            className="bg-transparent rounded-full w-full h-10 focus:outline-none px-5 ring-2 focus:ring-4 transition ring-neutral-200 focus:ring-neutral-50 border-none placeholder:text-neutral-400"
+            type="text"
+            name="message"
+            placeholder="Write a message..."
+          />
+          <button className="absolute right-0">
+            <ArrowUpCircleIcon className="size-10 text-orange-500 transition-colors hover:text-orange-300" />
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

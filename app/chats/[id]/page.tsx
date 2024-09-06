@@ -1,4 +1,6 @@
+import BackButton from "@/components/back-button";
 import ChatMessagesList from "@/components/chat-messages-list";
+import Header from "@/components/header";
 import db from "@/lib/db";
 import getSession from "@/lib/session";
 import { Prisma } from "@prisma/client";
@@ -63,12 +65,17 @@ export default async function ChatRoom({ params }: { params: { id: string } }) {
   if (!user) return notFound();
 
   return (
-    <ChatMessagesList
-      chatRoomId={params.id}
-      userId={session.id!}
-      username={user.username}
-      avatar={user.avatar!}
-      initialMessages={initialMessages}
-    />
+    <>
+      <Header>
+        <BackButton />
+      </Header>
+      <ChatMessagesList
+        chatRoomId={params.id}
+        userId={session.id!}
+        username={user.username}
+        avatar={user.avatar!}
+        initialMessages={initialMessages}
+      />
+    </>
   );
 }
