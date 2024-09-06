@@ -98,8 +98,8 @@ model Message {
   payload String                               // 메시지 내용
   created_at DateTime @default(now())          // 생성일
   updated_at DateTime @updatedAt               // 수정일
-  room       ChatRoom @relation(fields: [chatRoomId], references: [id]) // 메시지가 들어있는 채팅방, 채팅방 삭제되면 메시지 삭제됨
-  user       User     @relation(fields: [userId], references: [id])     // 메시지를 보낸 유저, 유저가 삭제되면 메시지 삭제됨, (이건, 유저가 삭제되면 익명으로 남아야 되지 않나, cascade 로하는 게 맞을까? 고민해보기 TODO(woojin)) 
+  room       ChatRoom @relation(fields: [chatRoomId], references: [id], onDelete: Cascade) // 메시지가 들어있는 채팅방, 채팅방 삭제되면 메시지 삭제됨
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)     // 메시지를 보낸 유저, 유저가 삭제되면 메시지 삭제됨, (이건, 유저가 삭제되면 익명으로 남아야 되지 않나, cascade 로하는 게 맞을까? 고민해보기 TODO(woojin)) 
   chatRoomId String // 채팅방 id
   userId     Int    // 유저 id
 }
@@ -111,6 +111,6 @@ model LiveStream {
   stream_id  String                               // 스트리밍 id (아이디는 어디에 썻었지? TODO(woojin))
   created_at DateTime @default(now())             // 생성일
   updated_at DateTime @updatedAt                  // 수정일
-  user   User @relation(fields: [userId], references: [id]) // 스트리밍을 생성한 유저, 유저가 삭제되면 스트리밍도 삭제됨
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade) // 스트리밍을 생성한 유저, 유저가 삭제되면 스트리밍도 삭제됨
   userId Int // 유저 id
 }
