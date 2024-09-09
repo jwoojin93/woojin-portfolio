@@ -6,10 +6,6 @@ import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { unstable_cache as nextCache } from "next/cache";
 
-// interface SessionContent {
-//   id?: number;
-// }
-
 interface IPost {
   user: {
     username: string;
@@ -21,6 +17,57 @@ interface IPost {
   id: number;
   userId: number;
 }
+
+/**
+ * 채팅방 만들기
+ */
+export const createChatRoom = async (post: IPost) => {
+  "use server";
+
+  const session = await getSession(); // 세션 가져오기
+
+  // 유저간에 생성했던 채팅방이 있는 지 확인합니다.
+  const result = await db.chatRoom.findMany({
+    where: {
+      AND: [
+        { users: { some: { id: post.userId } } },
+        { users: { some: { id: session.id } } },
+      ],
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  if (result.length > 0) {
+    // 기존에 유저간에 생성된 채팅방이 있을 경우 해당 채팅방으로 이동합니다.
+    redirect(`/chats/${result[0].id}`);
+  } else {
+    // post 의 user id 와 접속중인 user id 를 이용하여 chatRoom 데이터베이스 컬럼을 생성합니다.
+    const room = await db.chatRoom.create({
+      data: {
+        users: {
+          connect: [{ id: post.userId }, { id: session.id }],
+        },
+      },
+      select: { id: true },
+    });
+    // chatRoom 데이터베이스 컬럼이 생성되면 id 를 이용하여 채팅방으로 이동합니다.
+    redirect(`/chats/${room.id}`);
+  }
+};
+
+/**
+ * 게시글을 삭제하고 게시글 탭으로 이동합니다.
+ */
+export const deletePost = async (post: IPost) => {
+  "use server";
+  await db.post.delete({
+    where: { id: post.id },
+    select: { id: true },
+  });
+  redirect(`/post`);
+};
 
 /**
  * 게시글을 가져올 때 next cache 를 사용합니다.
@@ -94,61 +141,11 @@ export async function getPost(id: number) {
 }
 
 /**
- * 채팅방 만들기
- */
-export const createChatRoom = async (post: IPost) => {
-  const session = await getSession(); // 세션 가져오기
-
-  // 유저간에 생성했던 채팅방이 있는 지 확인합니다.
-  const result = await db.chatRoom.findMany({
-    where: {
-      AND: [
-        { users: { some: { id: post.userId } } },
-        { users: { some: { id: session.id } } },
-      ],
-    },
-    select: {
-      id: true,
-    },
-  });
-
-  if (result.length > 0) {
-    // 기존에 유저간에 생성된 채팅방이 있을 경우 해당 채팅방으로 이동합니다.
-    redirect(`/chats/${result[0].id}`);
-  } else {
-    // post 의 user id 와 접속중인 user id 를 이용하여 chatRoom 데이터베이스 컬럼을 생성합니다.
-    const room = await db.chatRoom.create({
-      data: {
-        users: {
-          connect: [{ id: post.userId }, { id: session.id }],
-        },
-      },
-      select: { id: true },
-    });
-    // chatRoom 데이터베이스 컬럼이 생성되면 id 를 이용하여 채팅방으로 이동합니다.
-    redirect(`/chats/${room.id}`);
-  }
-};
-
-/**
- * 게시글을 삭제하고 게시글 탭으로 이동합니다.
- */
-export const deletePost = async (post: IPost) => {
-  await db.post.delete({
-    where: { id: post.id },
-    select: { id: true },
-  });
-  redirect(`/post`);
-};
-
-/**
  * post id 를 이용하여 좋아요 상태를 가져옵니다.
  * @param postId
  * @returns
  */
 export async function getLikeStatus(postId: number, sessionId: number) {
-  // const session = await getSession(); // 세션 가져오기
-
   // post id 와 user id 를 사용하여 like 여부를 조회합니다.
   const isLiked = await db.like.findUnique({
     where: {
@@ -169,36 +166,6 @@ export async function getLikeStatus(postId: number, sessionId: number) {
     isLiked: Boolean(isLiked),
   };
 }
-
-/**
- * post id 를 이용하여 좋아요 상태를 가져옵니다.
- * @param postId
- * @returns
- */
-// export async function getLikeStatus(
-//   postId: number,
-//   session: IronSession<SessionContent>
-// ) {
-//   // post id 와 user id 를 사용하여 like 여부를 조회합니다.
-//   const isLiked = await db.like.findUnique({
-//     where: {
-//       id: {
-//         postId,
-//         userId: session.id!,
-//       },
-//     },
-//   });
-
-//   // like database 의 수를 조회합니다.
-//   const likeCount = await db.like.count({
-//     where: { postId },
-//   });
-
-//   return {
-//     likeCount,
-//     isLiked: Boolean(isLiked),
-//   };
-// }
 
 /**
  * 좋아요 추가 기능

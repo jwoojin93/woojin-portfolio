@@ -1,3 +1,5 @@
+"use server";
+
 import { formatToTimeAgo } from "@/lib/utils";
 import { EyeIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
@@ -92,12 +94,16 @@ export default async function PostDetail({
             <Link href={`/posts/${post.id}/edit`} className="w-auto flex-1">
               <button className="primary-btn">EDIT</button>
             </Link>
-            <form action={() => deletePost(post)} className="w-auto flex-1">
+            {/* TODO (woojin): bind(null, post) 가 어떤 동작을 하는 지 정확히 이해하기 */}
+            <form
+              action={deletePost.bind(null, post)}
+              className="w-auto flex-1"
+            >
               <button className="primary-btn">DELETE</button>
             </form>
           </div>
         ) : (
-          <form action={() => createChatRoom(post)}>
+          <form action={createChatRoom.bind(null, post)}>
             <button className="primary-btn mt-16">채팅하기</button>
           </form>
         )}
