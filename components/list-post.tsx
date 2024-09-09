@@ -42,7 +42,8 @@ export default async function ListPost({
   user,
   sessionId,
 }: ListPostProps) {
-  const { likeCount, isLiked } = await getLikeStatus(id);
+  const session = await getSession();
+  const { likeCount, isLiked } = await getLikeStatus(id, session.id!);
 
   return (
     <Link
