@@ -20,38 +20,41 @@ export default async function ChatRoomList() {
   });
 
   return chatRooms.length > 0 ? (
-    chatRooms.map((chatRoom) => (
-      <Link key={chatRoom.id} href={`/chats/${chatRoom.id}`}>
-        {chatRoom.users.map(
-          (user) =>
-            user.id !== session.id && (
-              <div
-                key={user.id}
-                className="w-full bg-white shadow-sm rounded-lg px-5 h-20 flex items-center gap-4"
-              >
-                <div className="size-12 relative">
-                  <Image
-                    src={user.avatar ? user.avatar : "/placeholder.jpg"}
-                    alt="user avatar"
-                    fill
-                    className="rounded-xl"
-                  />
+    <div className="flex flex-col gap-3">
+      {chatRooms.map((chatRoom) => (
+        <Link key={chatRoom.id} href={`/chats/${chatRoom.id}`}>
+          {chatRoom.users.map(
+            (user) =>
+              user.id !== session.id && (
+                <div
+                  key={user.id}
+                  className="w-full bg-white shadow-sm rounded-lg px-5 h-20 flex items-center gap-4"
+                >
+                  <div className="size-12 relative">
+                    <Image
+                      src={user.avatar ? user.avatar : "/placeholder.jpg"}
+                      alt="user avatar"
+                      fill
+                      className="rounded-xl"
+                    />
+                  </div>
+                  <div>
+                    <p className="text-sm text-black font-semibold">
+                      {user.username}
+                    </p>
+                    <p className="text-sm text-neutral-600">
+                      {chatRoom.messages.length > 0
+                        ? chatRoom.messages[chatRoom.messages.length - 1]
+                            .payload
+                        : " "}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-sm text-black font-semibold">
-                    {user.username}
-                  </p>
-                  <p className="text-sm text-neutral-600">
-                    {chatRoom.messages.length > 0
-                      ? chatRoom.messages[chatRoom.messages.length - 1].payload
-                      : " "}
-                  </p>
-                </div>
-              </div>
-            )
-        )}
-      </Link>
-    ))
+              )
+          )}
+        </Link>
+      ))}
+    </div>
   ) : (
     <p className="text-gray-600 text-sm text-center ">
       채팅방이 없습니다. <br />
