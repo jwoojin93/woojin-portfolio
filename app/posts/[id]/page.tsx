@@ -35,7 +35,7 @@ export default async function PostDetail({
   return (
     <>
       <Header>
-        <BackButton />
+        <BackButton replace="/post" />
       </Header>
 
       <div className="mt-14">

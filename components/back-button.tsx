@@ -3,10 +3,11 @@
 import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
 
-export default function BackButton() {
+export default function BackButton({ replace }: { replace?: string }) {
   const router = useRouter();
   const goBack = () => {
-    router.back();
+    if (replace) router.replace(replace);
+    else router.back();
   };
 
   return (
