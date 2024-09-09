@@ -103,7 +103,7 @@ export default async function PostDetail({
             </form>
           </div>
         ) : (
-          <form action={createChatRoom.bind(null, post)}>
+          <form action={createChatRoom.bind(null, post.userId)}>
             <button className="primary-btn mt-16">채팅하기</button>
           </form>
         )}

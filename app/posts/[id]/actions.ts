@@ -21,7 +21,7 @@ interface IPost {
 /**
  * 채팅방 만들기
  */
-export const createChatRoom = async (post: IPost) => {
+export const createChatRoom = async (userId: number) => {
   "use server";
 
   const session = await getSession(); // 세션 가져오기
@@ -30,7 +30,7 @@ export const createChatRoom = async (post: IPost) => {
   const result = await db.chatRoom.findMany({
     where: {
       AND: [
-        { users: { some: { id: post.userId } } },
+        { users: { some: { id: userId } } },
         { users: { some: { id: session.id } } },
       ],
     },
@@ -47,7 +47,7 @@ export const createChatRoom = async (post: IPost) => {
     const room = await db.chatRoom.create({
       data: {
         users: {
-          connect: [{ id: post.userId }, { id: session.id }],
+          connect: [{ id: userId }, { id: session.id }],
         },
       },
       select: { id: true },
