@@ -49,17 +49,12 @@ export async function updatePost(formData: FormData, postId: number) {
   const result = postSchema.safeParse(data);
 
   if (!result.success) {
-    // 결과가 정상이 아닐경우 에러를 반환한다.
-    console.log("111");
-    return result.error.flatten();
+    return result.error.flatten(); // 결과가 정상이 아닐경우 에러를 반환한다.
   } else {
-    console.log("222");
     // 결과가 정상일 경우 title, description, price, photo, user 가 들어있는 post database 를 생성한다.
     // 처리가 완료되면 생성된 post id 를 이용하여 post 상세페이지로 redirect 한다.
     const session = await getSession();
     if (session.id) {
-      console.log("333");
-      console.log("result: ", result);
       await db.post.update({
         where: { id: postId },
         data: {
