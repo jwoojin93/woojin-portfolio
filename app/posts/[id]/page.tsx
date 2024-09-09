@@ -25,13 +25,9 @@ export default async function PostDetail({
   const id = Number(params.id);
 
   if (isNaN(id)) return notFound(); // post id 가 없을 경우 not found 를 호출합니다.
-
   const post = await getPost(id); // const post = await getCachedPost(id);
-
   if (!post) return notFound(); // post 가 없을 경우 not found 를 호출합니다.
-
   const { likeCount, isLiked } = await getCachedLikeStatus(id); // 좋아요 수와, 좋아요 여부를 가져옵니다.
-
   const isOwner = await getIsOwner(post.userId); // 현재 post 가 접속한 유저의 post 인지 확인.
 
   return (

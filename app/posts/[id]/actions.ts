@@ -6,9 +6,9 @@ import { revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { unstable_cache as nextCache } from "next/cache";
 
-interface SessionContent {
-  id?: number;
-}
+// interface SessionContent {
+//   id?: number;
+// }
 
 interface IPost {
   user: {
@@ -40,8 +40,10 @@ export const getCachedPost = nextCache(getPost, ["post-detail"], {
  * @returns
  */
 export async function getCachedLikeStatus(postId: number) {
+  const session = await getSession();
+
   const cachedOperation = nextCache(
-    () => getLikeStatus(postId),
+    () => getLikeStatus(postId, session.id!),
     ["post-like-status"],
     {
       tags: [`like-status-${postId}`],
@@ -95,8 +97,6 @@ export async function getPost(id: number) {
  * 채팅방 만들기
  */
 export const createChatRoom = async (post: IPost) => {
-  "use server";
-
   const session = await getSession(); // 세션 가져오기
 
   // 유저간에 생성했던 채팅방이 있는 지 확인합니다.
@@ -134,7 +134,6 @@ export const createChatRoom = async (post: IPost) => {
  * 게시글을 삭제하고 게시글 탭으로 이동합니다.
  */
 export const deletePost = async (post: IPost) => {
-  "use server";
   await db.post.delete({
     where: { id: post.id },
     select: { id: true },
@@ -147,15 +146,15 @@ export const deletePost = async (post: IPost) => {
  * @param postId
  * @returns
  */
-export async function getLikeStatus(postId: number) {
-  const session = await getSession(); // 세션 가져오기
+export async function getLikeStatus(postId: number, sessionId: number) {
+  // const session = await getSession(); // 세션 가져오기
 
   // post id 와 user id 를 사용하여 like 여부를 조회합니다.
   const isLiked = await db.like.findUnique({
     where: {
       id: {
         postId,
-        userId: session.id!,
+        userId: sessionId,
       },
     },
   });
@@ -208,7 +207,6 @@ export async function getLikeStatus(postId: number) {
  * @param postId
  */
 export async function likePost(postId: number) {
-  // await new Promise((r) => setTimeout(r, 10000));
   const session = await getSession();
 
   try {
