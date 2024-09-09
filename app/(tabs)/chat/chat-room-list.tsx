@@ -54,7 +54,9 @@ export default async function ChatRoomList() {
     ))
   ) : (
     <p className="text-gray-600 text-sm text-center ">
-      채팅방이 없습니다. 게시글 탭에서 게시자와 채팅방을 생성해보세요.
+      채팅방이 없습니다. <br />
+      1. User List 에서 원하는 유저와 채팅을 시작해보세요 <br />
+      2. 게시글 탭에서 게시자와 채팅방을 시작해보세요.
     </p>
   );
 }

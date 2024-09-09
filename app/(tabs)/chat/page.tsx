@@ -1,7 +1,7 @@
-import ChatRoomList from "@/components/chat-room-list";
 import ChatTab from "@/components/chat-tab";
 import Title from "@/components/title";
-import UserList from "@/components/user-list";
+import UserList from "@/app/(tabs)/chat/user-list";
+import ChatRoomList from "@/app/(tabs)/chat/chat-room-list";
 
 export default async function Chat({
   searchParams,
@@ -12,11 +12,7 @@ export default async function Chat({
     <div>
       <Title value="Chat Room" />
       <ChatTab tab={searchParams?.tab} />
-      {searchParams?.tab === "chatroom" ? (
-        <ChatRoomList />
-      ) : (
-        <UserList />
-      )}
+      {searchParams?.tab === "chatroom" ? <ChatRoomList /> : <UserList />}
     </div>
   );
 }
