@@ -123,7 +123,7 @@ export default function ChatMessagesList({
 
   return (
     <div className="h-full pb-14">
-      <div className="flex flex-col justify-start gap-5 w-full max-h-[-webkit-fill-available] overflow-y-scroll">
+      <div className="flex flex-col justify-start gap-5 w-full max-h-[-webkit-fill-available] overflow-y-auto">
         {messages.map((message) => (
           <div
             key={message.id}
@@ -163,7 +163,7 @@ export default function ChatMessagesList({
 
         <div ref={messageEndRef}></div>
         <form
-          className="fixed bottom-5 w-[calc(100%-40px)]"
+          className="fixed bottom-5 max-w-[760px] w-[calc(100%-40px)]"
           onSubmit={onSubmit}
         >
           <input

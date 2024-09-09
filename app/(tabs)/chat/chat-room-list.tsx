@@ -43,7 +43,7 @@ export default async function ChatRoomList() {
                   </p>
                   <p className="text-sm text-neutral-600">
                     {chatRoom.messages.length > 0
-                      ? chatRoom.messages[0].payload
+                      ? chatRoom.messages[chatRoom.messages.length - 1].payload
                       : " "}
                   </p>
                 </div>
