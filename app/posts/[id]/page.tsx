@@ -11,7 +11,7 @@ import Link from "next/link";
 import Textarea from "@/components/textarea";
 import ArrowButton from "@/components/arrow-button";
 import {
-  createChatRoom,
+  connectChatRoom,
   deletePost,
   getCachedLikeStatus,
   getIsOwner,
@@ -103,7 +103,7 @@ export default async function PostDetail({
             </form>
           </div>
         ) : (
-          <form action={createChatRoom.bind(null, post.userId)}>
+          <form action={connectChatRoom.bind(null, post.userId)}>
             <button className="primary-btn mt-16">채팅하기</button>
           </form>
         )}

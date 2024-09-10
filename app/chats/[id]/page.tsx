@@ -1,68 +1,30 @@
 import BackButton from "@/components/back-button";
 import ChatMessagesList from "@/components/chat-messages-list";
 import Header from "@/components/header";
-import db from "@/lib/db";
 import getSession from "@/lib/session";
 import { Prisma } from "@prisma/client";
 import { notFound } from "next/navigation";
-
-async function getRoom(id: string) {
-  const room = await db.chatRoom.findUnique({
-    where: { id },
-    include: {
-      users: { select: { id: true } },
-    },
-  });
-  if (room) {
-    const session = await getSession();
-    const canSee = Boolean(room.users.find((user) => user.id === session.id!));
-    if (!canSee) return null;
-  }
-  return room;
-}
-
-async function getMessages(chatRoomId: string) {
-  const messages = await db.message.findMany({
-    where: { chatRoomId },
-    select: {
-      id: true,
-      payload: true,
-      created_at: true,
-      userId: true,
-      user: {
-        select: {
-          avatar: true,
-          username: true,
-        },
-      },
-    },
-  });
-  return messages;
-}
-
-async function getUserProfile() {
-  const session = await getSession();
-  const user = await db.user.findUnique({
-    where: { id: session.id! },
-    select: {
-      username: true,
-      avatar: true,
-    },
-  });
-  return user;
-}
+import {
+  getChatRoomByUser,
+  getMessages,
+  getRoom,
+  getUserProfile,
+} from "./actions";
 
 export type InitialChatMessages = Prisma.PromiseReturnType<typeof getMessages>;
 
 export default async function ChatRoom({ params }: { params: { id: string } }) {
-  const room = await getRoom(params.id);
-  if (!room) return notFound();
+  const room = await getRoom(params.id); // ChatRoom id 로 ChatRoom db 를 가져옵니다.
+  if (!room) return notFound(); // ChatRoom 이 없으면 404 를 호출합니다.
 
-  const initialMessages = await getMessages(params.id);
+  const initialMessages = await getMessages(params.id); // ChatRoom id 로 Message db 를 가져옵니다.
   const session = await getSession();
 
-  const user = await getUserProfile();
-  if (!user) return notFound();
+  const user = await getUserProfile(); // 세션과 일치하는 유저 정보를 가져옵니다.
+  if (!user) return notFound(); // 세션과 일치하는 유저가 없을 경우 404 를 호출합니다. => 그전에 검증하는데 이 로직이 필요한가?
+
+  const chatRoomByUser = await getChatRoomByUser(params.id);
+  console.log("chatRoomByUser: ", chatRoomByUser || "없음");
 
   return (
     <>

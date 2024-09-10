@@ -18,10 +18,36 @@ interface IPost {
   userId: number;
 }
 
+const createRoomByUser = async (userId: number, roomId: string) => {
+  await db.chatRoomByUser.create({
+    data: {
+      user: {
+        connect: { id: userId },
+      },
+      ChatRoom: {
+        connect: { id: roomId },
+      },
+      last_read_at: new Date(),
+    },
+  });
+};
+
+const createChatRoom = async (userId: number, sessionId: number) => {
+  const room = await db.chatRoom.create({
+    data: {
+      users: {
+        connect: [{ id: userId }, { id: sessionId }],
+      },
+    },
+    select: { id: true },
+  });
+  return room;
+};
+
 /**
  * 채팅방 만들기
  */
-export const createChatRoom = async (userId: number) => {
+export const connectChatRoom = async (userId: number) => {
   "use server";
 
   const session = await getSession(); // 세션 가져오기
@@ -44,14 +70,12 @@ export const createChatRoom = async (userId: number) => {
     redirect(`/chats/${result[0].id}`);
   } else {
     // post 의 user id 와 접속중인 user id 를 이용하여 chatRoom 데이터베이스 컬럼을 생성합니다.
-    const room = await db.chatRoom.create({
-      data: {
-        users: {
-          connect: [{ id: userId }, { id: session.id }],
-        },
-      },
-      select: { id: true },
-    });
+    const room = await createChatRoom(userId, session.id!);
+
+    // 유저별 채팅방 데이터베이스를 생성합니다. (안읽은 메시지 처리용)
+    createRoomByUser(userId, room.id);
+    createRoomByUser(session.id!, room.id);
+
     // chatRoom 데이터베이스 컬럼이 생성되면 id 를 이용하여 채팅방으로 이동합니다.
     redirect(`/chats/${room.id}`);
   }

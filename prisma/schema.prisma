@@ -26,6 +26,7 @@ model User {
   chat_rooms ChatRoom[]   // 유저와 관련된 채팅방들
   messages   Message[]    // 유저가 보낸 메시지들
   LiveStream LiveStream[] // 유저가 만든 스트리밍들
+  ChatRoomByUser ChatRoomByUser[] // 메세지를 읽었는지 여부
 }
 
 model SMSToken {
@@ -91,6 +92,16 @@ model ChatRoom {
   created_at DateTime  @default(now()) // 생성일
   updated_at DateTime  @updatedAt      // 수정일
   messages   Message[]                 // 주고받은 메시지들
+  ChatRoomByUser ChatRoomByUser[]
+}
+
+model ChatRoomByUser {
+  id           Int         @id @default(autoincrement()) // 메시지 id (자동 증가함)
+  userId       Int  
+  last_read_at DateTime
+  user         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  ChatRoom     ChatRoom    @relation(fields: [chatRoomId], references: [id], onDelete: Cascade)
+  chatRoomId   String
 }
 
 model Message {
@@ -102,7 +113,10 @@ model Message {
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)     // 메시지를 보낸 유저, 유저가 삭제되면 메시지 삭제됨, (이건, 유저가 삭제되면 익명으로 남아야 되지 않나, cascade 로하는 게 맞을까? 고민해보기 TODO(woojin)) 
   chatRoomId String // 채팅방 id
   userId     Int    // 유저 id
+  // last_read_at 
 }
+
+
 
 model LiveStream {
   id         Int    @id @default(autoincrement()) // 스트리밍 id
