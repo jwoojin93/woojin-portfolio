@@ -25,6 +25,7 @@ export default async function ChatRoom({ params }: { params: { id: string } }) {
 
   const chatRoomByUser = await getChatRoomByUser(params.id);
   console.log("chatRoomByUser: ", chatRoomByUser || "없음");
+  if (chatRoomByUser) console.log(chatRoomByUser[0].last_read_at);
 
   return (
     <>

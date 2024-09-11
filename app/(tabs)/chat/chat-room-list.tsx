@@ -1,7 +1,6 @@
 import db from "@/lib/db";
 import getSession from "@/lib/session";
-import Image from "next/image";
-import Link from "next/link";
+import ChatRoomListItem from "./chat-room-list-item";
 
 export default async function ChatRoomList() {
   const session = await getSession();
@@ -22,37 +21,7 @@ export default async function ChatRoomList() {
   return chatRooms.length > 0 ? (
     <div className="flex flex-col gap-3">
       {chatRooms.map((chatRoom) => (
-        <Link key={chatRoom.id} href={`/chats/${chatRoom.id}`}>
-          {chatRoom.users.map(
-            (user) =>
-              user.id !== session.id && (
-                <div
-                  key={user.id}
-                  className="w-full bg-white shadow-sm rounded-lg px-5 h-20 flex items-center gap-4"
-                >
-                  <div className="size-12 relative">
-                    <Image
-                      src={user.avatar ? user.avatar : "/placeholder.jpg"}
-                      alt="user avatar"
-                      fill
-                      className="rounded-xl"
-                    />
-                  </div>
-                  <div>
-                    <p className="text-sm text-black font-semibold">
-                      {user.username}
-                    </p>
-                    <p className="text-sm text-neutral-600">
-                      {chatRoom.messages.length > 0
-                        ? chatRoom.messages[chatRoom.messages.length - 1]
-                            .payload
-                        : " "}
-                    </p>
-                  </div>
-                </div>
-              )
-          )}
-        </Link>
+        <ChatRoomListItem key={chatRoom.id} chatRoom={chatRoom} />
       ))}
     </div>
   ) : (

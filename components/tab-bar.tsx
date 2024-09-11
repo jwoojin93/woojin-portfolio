@@ -17,18 +17,23 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Url } from "next/dist/shared/lib/router/router";
+import React from "react";
 
 const TabBtn = ({
   children,
   href,
+  active,
 }: {
   children?: React.ReactNode;
   href: Url;
+  active?: Boolean;
 }) => {
   return (
     <Link
       href={href}
-      className="flex flex-col items-center gap-px flex-1 py-4 [&>svg]:w-7 [&>svg]:h-7"
+      className={`flex flex-col items-center gap-px flex-1 py-4 [&>svg]:w-7 [&>svg]:h-7 ${
+        active ? "*:text-orange-700" : "*:text-neutral-400"
+      }`}
     >
       {children}
     </Link>
@@ -39,13 +44,13 @@ export default function TabBar() {
   const pathname = usePathname();
 
   return (
-    <div className="fixed left-0 bottom-0 w-full border-orange-950 border-t  *:text-orange-950 bg-neutral-100 flex ">
-      <TabBtn href="/intro">
+    <div className="fixed left-0 bottom-0 w-full border-neutral-300 border-t  bg-neutral-100 flex ">
+      <TabBtn href="/intro" active={Boolean(pathname === "/intro")}>
         {pathname === "/intro" ? <SolidHomeIcon /> : <OutlineHomeIcon />}
         <span>Intro</span>
       </TabBtn>
 
-      <TabBtn href="/readme">
+      <TabBtn href="/readme" active={Boolean(pathname === "/readme")}>
         {pathname === "/readme" ? (
           <SolidNewspaperIcon />
         ) : (
@@ -54,7 +59,7 @@ export default function TabBar() {
         <span>Readme</span>
       </TabBtn>
 
-      <TabBtn href="/post">
+      <TabBtn href="/post" active={Boolean(pathname === "/post")}>
         {pathname === "/post" ? (
           <SolidNewspaperIcon />
         ) : (
@@ -63,7 +68,7 @@ export default function TabBar() {
         <span>Post</span>
       </TabBtn>
 
-      <TabBtn href="/chat">
+      <TabBtn href="/chat" active={Boolean(pathname === "/chat")}>
         {pathname === "/chat" ? <SolidChatIcon /> : <OutlineChatIcon />}
         <span>Chat</span>
       </TabBtn>
@@ -77,7 +82,7 @@ export default function TabBar() {
         <span>Stream</span>
       </TabBtn> */}
 
-      <TabBtn href="/my">
+      <TabBtn href="/my" active={Boolean(pathname === "/my")}>
         {pathname === "/my" ? <SolidUserIcon /> : <OutlineUserIcon />}
         <span>My</span>
       </TabBtn>
