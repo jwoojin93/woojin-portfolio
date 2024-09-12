@@ -3,6 +3,7 @@ import ThreeCanvas from "@/components/three/ThreeCanvas";
 import Title from "@/components/title";
 import Link from "next/link";
 import { Suspense } from "react";
+import TestLogin from "./test-login";
 
 export default function Intro() {
   return (
@@ -20,7 +21,7 @@ export default function Intro() {
         </p>
 
         <div className="flex gap-2">
-          <span>SNS 계정이 없으신가요?</span>
+          <span>SNS 계정이 없다면?</span>
           <Link href="/login" className="hover:underline">
             로그인
           </Link>
@@ -29,6 +30,10 @@ export default function Intro() {
             회원가입
           </Link>
         </div>
+        {/* <div className="flex gap-2 items-center"> */}
+        {/* <div className="w-[270px]">둘러보고만 싶다면?</div> */}
+        <TestLogin />
+        {/* </div> */}
         <SocialLogin />
       </div>
     </div>

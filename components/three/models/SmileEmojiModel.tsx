@@ -54,9 +54,6 @@ export function SmileEmojiModel(props: JSX.IntrinsicElements["group"]) {
     config: config.wobbly,
   });
 
-  console.log("nodes: ", nodes);
-  console.log("materials: ", materials);
-
   return (
     <group
       ref={cameraGroupRef}

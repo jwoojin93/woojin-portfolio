@@ -16,13 +16,6 @@ const checkEmailExists = async (email: string) => {
     where: { email },
     select: { id: true },
   });
-
-  // if(user){
-  //   return true
-  // } else {
-  //   return false
-  // }
-
   return Boolean(user);
 };
 
@@ -57,6 +50,7 @@ export async function logIn(prevState: any, formData: FormData) {
         password: true,
       },
     });
+
     const ok = await bcrypt.compare(
       result.data.password,
       user!.password ?? "xxxx"
@@ -65,9 +59,7 @@ export async function logIn(prevState: any, formData: FormData) {
     if (ok) {
       const session = await getSession();
       session.id = user!.id;
-
       await session.save();
-
       redirect("/intro");
     } else {
       return {
@@ -78,4 +70,19 @@ export async function logIn(prevState: any, formData: FormData) {
       };
     }
   }
+}
+
+export async function testLogIn() {
+  const user = await db.user.findUnique({
+    where: { email: "test@test.com" },
+    select: {
+      id: true,
+      password: true,
+    },
+  });
+
+  const session = await getSession();
+  session.id = user!.id;
+  await session.save();
+  redirect("/intro");
 }
