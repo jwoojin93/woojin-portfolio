@@ -30,10 +30,7 @@ export default function Intro() {
             회원가입
           </Link>
         </div>
-        {/* <div className="flex gap-2 items-center"> */}
-        {/* <div className="w-[270px]">둘러보고만 싶다면?</div> */}
         <TestLogin />
-        {/* </div> */}
         <SocialLogin />
       </div>
     </div>

@@ -3,6 +3,7 @@ import ListPost from "@/components/list-post";
 import Title from "@/components/title";
 import db from "@/lib/db";
 import getSession from "@/lib/session";
+import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 
 async function getPosts() {
@@ -40,12 +41,21 @@ export default async function Post() {
 
   return (
     <div className="flex flex-col">
-      <Title value="Viewing the property" className="pb-8" />
+      <Title value="Free bulletin board" className="pb-8" />
       <p className="text-center text-neutral-600 mb-10 whitespace-normal break-keep">
-        부동산 임장 보고서를 작성할 수 있는 게시판 입니다
-        <br />
-        자유롭게 게시글을 작성해주세요.
+        자유게시판 입니다. <br />
+        수정과 삭제가 가능하니 자유롭게 게시글을 작성해주세요.✍️
       </p>
+      <div className="flex justify-end mb-5">
+        <Link
+          href="/posts/add"
+          className="primary-btn w-auto flex gap-2 items-center"
+        >
+          <PencilSquareIcon className="size-5" />
+          게시글 작성하기
+        </Link>
+      </div>
+
       {posts.length > 0 ? (
         <>
           {posts.map((post) => (
@@ -59,9 +69,6 @@ export default async function Post() {
           <span>게시글을 추가해주세요</span>
         </div>
       )}
-      <Link href="/posts/add" className="primary-btn ">
-        게시글 추가하기
-      </Link>
     </div>
   );
 }
