@@ -1,3 +1,4 @@
+import SocialLogin from "@/components/social-login";
 import ThreeCanvas from "@/components/three/ThreeCanvas";
 import Title from "@/components/title";
 import Link from "next/link";
@@ -17,15 +18,18 @@ export default function Intro() {
         <p className="mb-8">
           ✔ <span className="font-rubick font-bold">JUST SURFING IT</span> ✔
         </p>
-        <Link href="/create-account" className="primary-btn">
-          시작하기
-        </Link>
+
         <div className="flex gap-2">
-          <span>이미 계정이 있나요?</span>
+          <span>SNS 계정이 없으신가요?</span>
           <Link href="/login" className="hover:underline">
             로그인
           </Link>
+          /
+          <Link href="/create-account" className="hover:underline">
+            회원가입
+          </Link>
         </div>
+        <SocialLogin />
       </div>
     </div>
   );

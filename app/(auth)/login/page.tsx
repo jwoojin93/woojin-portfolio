@@ -17,7 +17,7 @@ export default function LogIn() {
       <Header>
         <BackButton />
       </Header>
-      <div className="flex flex-col gap-10 py-8 px-6">
+      <div className="flex flex-col gap-10 mt-14">
         <div className="flex flex-col gap-2 *:font-medium">
           <h1 className="text-2xl">안녕하세요!</h1>
           <h2 className="text-xl">Log in with email and password.</h2>
@@ -40,7 +40,6 @@ export default function LogIn() {
           />
           <FormButton text="Log in" />
         </form>
-        <SocialLogin />
       </div>
     </>
   );

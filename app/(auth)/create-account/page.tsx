@@ -2,7 +2,6 @@
 
 import Button from "@/components/button";
 import Input from "@/components/input";
-import SocialLogin from "@/components/social-login";
 import { useFormState } from "react-dom";
 import { createAccount } from "./actions";
 import BackButton from "@/components/back-button";
@@ -16,7 +15,7 @@ export default function CreateAccount() {
       <Header>
         <BackButton />
       </Header>
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-10 mt-10">
         <div className="flex flex-col gap-2 *:font-medium">
           <h1 className="text-2xl">안녕하세요!</h1>
           <h2 className="text-xl">Fill in the form below to join!</h2>
@@ -56,7 +55,6 @@ export default function CreateAccount() {
           />
           <Button text="Create account" />
         </form>
-        <SocialLogin />
       </div>
     </>
   );
