@@ -122,7 +122,7 @@ export default function ChatMessagesList({
   }, [messages]);
 
   return (
-    <div className="h-full pb-14">
+    <div className="h-full pt-10 pb-10">
       <div className="flex flex-col justify-start gap-5 w-full max-h-[-webkit-fill-available] overflow-y-auto">
         {messages.map((message) => (
           <div
@@ -163,7 +163,7 @@ export default function ChatMessagesList({
 
         <div ref={messageEndRef}></div>
         <form
-          className="fixed bottom-5 max-w-[760px] w-[calc(100%-40px)]"
+          className="fixed bottom-5 max-w-[760px] w-[calc(100%-40px)] bg-neutral-100 rounded-full"
           onSubmit={onSubmit}
         >
           <input
@@ -175,7 +175,7 @@ export default function ChatMessagesList({
             name="message"
             placeholder="Write a message..."
           />
-          <button className="absolute right-0">
+          <button className="absolute right-0 ">
             <ArrowUpCircleIcon className="size-10 text-orange-500 transition-colors hover:text-orange-300" />
           </button>
         </form>
