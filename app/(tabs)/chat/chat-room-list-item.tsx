@@ -1,9 +1,9 @@
 import { getChatRoomByUser } from "@/app/chats/[id]/actions";
-import db from "@/lib/db";
 import getSession from "@/lib/session";
 import { Message, User } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
+import { getMessageCount } from "./actions";
 
 interface IChatRoom {
   users: User[];
@@ -17,46 +17,8 @@ export default async function ChatRoomListItem({
   chatRoom: IChatRoom;
 }) {
   const session = await getSession();
-
-  const chatRoomByUser = await getChatRoomByUser(chatRoom.id);
-  console.log("chatRoomByUser 22: ", chatRoomByUser || "없음");
-  if (chatRoomByUser) console.log(chatRoomByUser[0].last_read_at);
-
-  // 세션 유저의 안읽은 리스트 가져오기
-  // last_read_at 이후로 현재 쌓인 messages 가 몇 개인지 가져오기
-  // 뒤에서부터 조회
-
-  // 모든 messages 가져오는 조건에 last_read_at 이후로 가져오는 조건절 추가하기
-  const messagesCount = await db.chatRoom.findMany({
-    where: {
-      AND: [
-        // {
-        //   users: {
-        //     some: {
-        //       id: session.id,
-        //     },
-        //   },
-        // },
-        // {
-        //   ChatRoomByUser: {
-        //     some: {
-        //       last_read_at: {
-        //         lte: new Date("2022-01-30"),
-        //       },
-        //     },
-        //   },
-        // },
-      ],
-    },
-
-    include: {
-      _count: {
-        select: { messages: true },
-      },
-    },
-  });
-
-  console.log("messagesCount 22: ", messagesCount);
+  const chatRoomByUser = await getChatRoomByUser(chatRoom.id, session.id!);
+  const messagesCount = await getMessageCount(chatRoomByUser);
 
   return (
     <Link href={`/chats/${chatRoom.id}`}>
@@ -79,7 +41,7 @@ export default async function ChatRoomListItem({
                 <p className="text-sm text-black font-semibold flex items-center gap-2">
                   {user.username}
                   <span className="bg-orange-500 text-white rounded-full flex items-center justify-center font-normal text-[10px] max-h-[15px] min-w-[15px] ">
-                    1
+                    {messagesCount[0]?._count?.messages}
                   </span>
                 </p>
                 <p className="text-sm text-neutral-600">

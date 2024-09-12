@@ -49,17 +49,12 @@ export async function getRoom(id: string) {
   return room;
 }
 
-export async function getChatRoomByUser(chatRoomId: string) {
-  const session = await getSession();
+export async function getChatRoomByUser(chatRoomId: string, userId: number) {
   const chatRoomReadByUser = await db.chatRoomByUser.findMany({
     where: {
-      user: {
-        id: session.id,
-      },
-      ChatRoom: {
-        id: chatRoomId,
-      },
+      user: { id: userId },
+      ChatRoom: { id: chatRoomId },
     },
   });
-  return chatRoomReadByUser;
+  return chatRoomReadByUser[0];
 }

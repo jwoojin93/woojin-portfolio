@@ -10,6 +10,7 @@ import {
   getRoom,
   getUserProfile,
 } from "./actions";
+import db from "@/lib/db";
 
 export type InitialChatMessages = Prisma.PromiseReturnType<typeof getMessages>;
 
@@ -23,9 +24,11 @@ export default async function ChatRoom({ params }: { params: { id: string } }) {
   const user = await getUserProfile(); // 세션과 일치하는 유저 정보를 가져옵니다.
   if (!user) return notFound(); // 세션과 일치하는 유저가 없을 경우 404 를 호출합니다. => 그전에 검증하는데 이 로직이 필요한가?
 
-  const chatRoomByUser = await getChatRoomByUser(params.id);
-  console.log("chatRoomByUser: ", chatRoomByUser || "없음");
-  if (chatRoomByUser) console.log(chatRoomByUser[0].last_read_at);
+  const chatRoomByUser = await getChatRoomByUser(params.id, session.id!);
+  await db.chatRoomByUser.update({
+    where: { id: chatRoomByUser.id },
+    data: { last_read_at: new Date() },
+  });
 
   return (
     <>
