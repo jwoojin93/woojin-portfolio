@@ -40,9 +40,9 @@ export default async function ChatRoomListItem({
               <div>
                 <p className="text-sm text-black font-semibold flex items-center gap-2">
                   {user.username}
-                  <span className="bg-orange-500 text-white rounded-full flex items-center justify-center font-normal text-[10px] max-h-[15px] min-w-[15px] ">
+                  {/* <span className="bg-orange-500 text-white rounded-full flex items-center justify-center font-normal text-[10px] max-h-[15px] min-w-[15px] ">
                     {messagesCount[0]?._count?.messages}
-                  </span>
+                  </span> */}
                 </p>
                 <p className="text-sm text-neutral-600">
                   {chatRoom.messages.length > 0
