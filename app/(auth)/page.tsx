@@ -15,8 +15,10 @@ export default function Intro() {
         </Suspense>
       </div>
       <div className="flex flex-col items-center gap-3 w-full">
-        <p className=" text-center">👆 emoji 를 클릭해보세요! 👆</p>
-        <p className="mb-8">
+        <p className="w-full text-center animate-bounce">
+          👆 3D 이모티콘을 클릭해보세요! 👆
+        </p>
+        <p className="mb-8 animate-bounce">
           ✔ <span className="font-rubick font-bold">JUST SURFING IT</span> ✔
         </p>
 
