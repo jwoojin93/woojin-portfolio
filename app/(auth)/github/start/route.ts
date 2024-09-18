@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 
 export function GET() {
+  console.log("github start");
   const baseURL = "https://github.com/login/oauth/authorize";
 
   const params = {

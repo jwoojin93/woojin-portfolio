@@ -8,6 +8,9 @@ const nextConfig = {
       {
         hostname: "imagedelivery.net",
       },
+      {
+        hostname: "ssl.pstatic.net",
+      },
     ],
   },
 };

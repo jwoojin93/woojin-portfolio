@@ -15,6 +15,9 @@ const publicOnlyUrls: Routes = {
   "/create-account": true,
   "/github/start": true,
   "/github/complete": true,
+  "/naver/start": true,
+  "/naver/complete": true,
+  "/naver/disconnect": true,
 };
 
 /**
