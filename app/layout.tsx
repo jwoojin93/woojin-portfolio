@@ -40,13 +40,16 @@ export const metadata: Metadata = {
     default: "Woojin's Portfolio",
   },
   description: "Sell and buy all the things!",
-  metadataBase: new URL("https://r3f-nextjs.vercel.app/"), // TODO(Woojin): metadataBase 의 기능 알아보기.
+  metadataBase: new URL("https://woojin-portfolio.vercel.app/"), // TODO(Woojin): metadataBase 의 기능 알아보기.
   openGraph: {
     type: "website",
     locale: "ko_KR",
-    url: "https://r3f-nextjs.vercel.app/",
-    title: "R3F & NextJS@13 😊",
-    description: "Customize Model with your own style!",
+    url: "https://woojin-portfolio.vercel.app/",
+    title: "Woojin's Portfolio 😊",
+    description: "프론트엔드 개발자 정우진의 포트폴레오 웹사이트 입니다",
+  },
+  verification: {
+    google: "eJpF2_QHH6srMdkl5VsVKgIyIFljeBkoD4YpKQ-7C5s",
   },
 };
 
