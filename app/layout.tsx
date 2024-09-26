@@ -46,7 +46,7 @@ export const metadata: Metadata = {
     locale: "ko_KR",
     url: "https://woojin-portfolio.vercel.app/",
     title: "Woojin's Portfolio 😊",
-    description: "프론트엔드 개발자 정우진의 포트폴레오 웹사이트 입니다",
+    description: "프론트엔드 개발자 정우진의 포트폴리오 웹사이트 입니다",
   },
   verification: {
     google: "eJpF2_QHH6srMdkl5VsVKgIyIFljeBkoD4YpKQ-7C5s",
